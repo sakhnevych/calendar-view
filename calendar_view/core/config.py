@@ -1,7 +1,7 @@
 from typing import Tuple, List
-
-from core import utils, time_utils
 from datetime import date, timedelta
+
+from calendar_view.core import utils, time_utils
 
 
 class CalendarConfig:

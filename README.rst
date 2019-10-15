@@ -79,8 +79,8 @@ Code:
 
 .. code-block:: python
 
-    from core import data
-    from calendar_view import Calendar
+    from calendar_view.core import data
+    from calendar_view.calendar import Calendar
 
     calendar = Calendar.build()
     calendar.add_event(data.event(day_of_week=0, interval='08:00 - 17:00'))
@@ -104,8 +104,8 @@ Code:
 
 .. code-block:: python
 
-    from core import data
-    from calendar_view import Calendar
+    from calendar_view.core import data
+    from calendar_view.calendar import Calendar
 
     config = data.CalendarConfig(
         lang='en',
@@ -128,6 +128,7 @@ Code:
     calendar.add_events(events)
     calendar.save("sprint_23.png")
 
+
 Output:
 
 .. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/sprint_23.png
@@ -143,9 +144,10 @@ If the name of event is too long, it can ee printed in the legend
 
 Code::
 
-    from core import data
-    from core.data import CalendarConfig, event
-    from calendar_view import Calendar
+    from calendar_view.core import data
+    from calendar_view.core.config import CalendarConfig
+    from calendar_view.core.data import event
+    from calendar_view.calendar import Calendar
 
     config = CalendarConfig(
         lang='en',

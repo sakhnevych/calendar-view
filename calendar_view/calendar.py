@@ -1,13 +1,14 @@
 from typing import List
 
 from PIL import Image, ImageDraw
-from datetime import date, timedelta
+from datetime import date, timedelta, time
 
-from config import i18n, style
-from core import data
-from core.data import *
-from core.utils import *
-import core.round_rectangle
+from calendar_view.config import i18n, style
+from calendar_view.core import data
+from calendar_view.core.config import CalendarConfig
+from calendar_view.core.event import Event
+from calendar_view.core import utils
+import calendar_view.core.round_rectangle
 
 
 class Calendar:
@@ -164,7 +165,7 @@ class Calendar:
         """
         Add title and combine all images into one.
         """
-        if is_blank(title) and legend is None:
+        if utils.is_blank(title) and legend is None:
             return events
 
         (event_width, event_height) = events.size

@@ -2,8 +2,7 @@ import re
 from datetime import time, date, timedelta
 from typing import Tuple, Optional
 
-from core import utils
-from core.utils import *
+from calendar_view.core import utils
 
 MAX_DAYS_RANGE_ALLOWED = 15
 ZERO_TIME = time(0, 0)
@@ -30,7 +29,7 @@ def parse_time(value: str) -> Optional[time]:
     """
     Parses time value. Can be used format: 'hh:mm' or 'hh'
     """
-    if is_blank(value):
+    if utils.is_blank(value):
         return None
     m = re.search(r'^([0-9]{1,2})(:([0-9]{2}))?$', value)
     if m is None:

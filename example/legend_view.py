@@ -1,5 +1,6 @@
-from core import data
-from core.data import CalendarConfig, event
+from calendar_view.core import data
+from calendar_view.core.config import CalendarConfig
+from calendar_view.core.data import event
 from calendar_view.calendar import Calendar
 
 config = CalendarConfig(

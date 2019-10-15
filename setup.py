@@ -5,7 +5,7 @@ with open("README.rst", "r") as f:
 
 setuptools.setup(
     name="calendar-view",
-    version="0.0.1",
+    version="0.0.3",
     author="Oleksandr Sakhnevych",
     author_email="o.sakhnevych@gmail.com",
     description="Library provides a graphical view of the calendar.",
