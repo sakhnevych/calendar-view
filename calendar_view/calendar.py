@@ -8,7 +8,9 @@ from calendar_view.core import data
 from calendar_view.core.config import CalendarConfig
 from calendar_view.core.event import Event
 from calendar_view.core import utils
-import calendar_view.core.round_rectangle
+from calendar_view.core.round_rectangle import rounded_rectangle
+
+ImageDraw.rounded_rectangle = rounded_rectangle
 
 
 class Calendar:
@@ -206,13 +208,6 @@ class Calendar:
     def __get_event_x(self, day_number: int):
         x_start = style.padding_horizontal + day_number * style.day_width
         return x_start, x_start + style.day_width
-
-    # def __get_event_y(self, hour: int):
-    #     y_start = style.padding_vertical + style.hour_height + hour * style.hour_height
-    #     from_config_hour = self.config.get_hours_range()[0]
-    #     if from_config_hour > 0:
-    #         y_start -= from_config_hour
-    #     return y_start, y_start + style.hour_height
 
     def __get_event_y(self, start: time, end: time):
         start_hour, end_hour = start.hour, end.hour

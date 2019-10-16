@@ -51,6 +51,3 @@ def rounded_rectangle(self: ImageDraw, xy, corner_radius, fill=None, outline=Non
                  0, 90, fill=outline, width=width)
         self.arc([(upper_left[0], bottom_right[1] - rad * 2), (upper_left[0] + rad * 2, bottom_right[1])],
                  90, 180, fill=outline, width=width)
-
-
-ImageDraw.rounded_rectangle = rounded_rectangle
