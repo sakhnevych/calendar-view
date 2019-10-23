@@ -67,6 +67,40 @@ Event
    ``interval``, str, "Start and end of the event in format **HH:mm - HH:mm** or **HH - HH**. Can't be used together with ``start_time`` and ``end_time``."
 
 
+Dates
+-----
+
+The date can be defines using next rules.
+
+1. Allowed year range: [1900, 2100]
+
+2. Any delimiter from the list can be used:
+
+    * ``-``
+
+    * ``.``
+
+    * ``/``
+
+3. Allowed formats:
+
+    * ``YYYY.mm.dd``
+
+    * ``dd.mm.YYYY``
+
+    * ``dd.mm.YY`` - will use 20th century
+
+    * ``dd.mm`` - for the current year
+
+
+As an example, let's look for example at the same data in all formats (assume, that current year is 2019):
+
+* 2019-06-21
+* 21.06.2019
+* 21/06/19
+* 21/06
+
+
 Examples
 ========
 
@@ -140,7 +174,7 @@ Output:
 3. Legend view
 --------------
 
-If the name of event is too long, it can ee printed in the legend
+If the name of event is too long, it can ee printed in the legend.
 
 Code::
 
