@@ -1,7 +1,7 @@
 from datetime import time
 
-from core.config import CalendarConfig
-from core.event import Event
+from calendar_view.core.config import CalendarConfig
+from calendar_view.core.event import Event
 
 
 class InputData:

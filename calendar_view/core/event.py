@@ -1,5 +1,6 @@
-from core.config import CalendarConfig
-from core.time_utils import *
+from calendar_view.core.config import CalendarConfig
+from calendar_view.core.time_utils import *
+from calendar_view.core.utils import *
 
 
 class Event:

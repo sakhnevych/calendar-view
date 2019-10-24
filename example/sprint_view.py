@@ -1,4 +1,4 @@
-from core import data
+from calendar_view.core import data
 from calendar_view.calendar import Calendar
 
 config = data.CalendarConfig(

@@ -19,19 +19,19 @@ Configuration for the all view can be done using ``CalendarConfig`` class.
    :header: "Parameter", "Type", "Description"
    :widths: 17, 10, 73
 
-   lang, str, "Language, which is used for name of the weekday. Supported values: en, ru, ua. Default value: **en**"
-   title, str, "Title of the view. Can be empty"
-   dates, str, "The range of the days to show. Default value: **'Mo - Su'**"
-   days, int, "If ``dates`` does not exist, the number of days to display can be configured starting from Monday. For example, '4' means ``dates='Mo - Th'``"
-   hours, str, "Hour range to display"
-   mode, str, "Mode will override some parameters. Available modes:
+   ``lang``, str, "Language, which is used for name of the weekday. Supported values: en, ru, ua. Default value: **en**"
+   ``title``, str, "Title of the view. Can be empty"
+   ``dates``, str, "The range of the days to show. Default value: **'Mo - Su'**"
+   ``days``, int, "If ``dates`` does not exist, the number of days to display can be configured starting from Monday. For example, '4' means ``dates='Mo - Th'``"
+   ``hours``, str, "Hour range to display"
+   ``mode``, str, "Mode will override some parameters. Available modes:
     - 'week' - show current week
     - 'day_hours' - show hours range '8:00 - 22:00'
     - 'working_hours' - show hours range '8:00 - 19:00'
     - 'auto' - modes 'week' + 'day_hours'"
-   show_date, bool, "Defines is the date has to be shown. Format: ``'dd.mm'`` or ``'dd.mm.YYYY'`` if ``show_year=True``. Default value: **True**"
-   show_year, bool, "Defines is the year has to be added to the date format. Omitted if ``show_date=False``. Default value: **False**"
-   legend, bool, "If ``False`` - draw the name of the event inside the block. If ``True`` - draw the name in the legend. If not defined, will be chosen automatically."
+   ``show_date``, bool, "Defines is the date has to be shown. Format: ``'dd.mm'`` or ``'dd.mm.YYYY'`` if ``show_year=True``. Default value: **True**"
+   ``show_year``, bool, "Defines is the year has to be added to the date format. Omitted if ``show_date=False``. Default value: **False**"
+   ``legend``, bool, "If ``False`` - draw the name of the event inside the block. If ``True`` - draw the name in the legend. If not defined, will be chosen automatically."
 
 Example:
 
@@ -59,12 +59,46 @@ Event
    :header: "Parameter", "Type", "Description"
    :widths: 20, 10, 70
 
-   name, str, "Language, which is used for name of the weekday. Supported values: en, ru, ua"
-   day, str, "Title of the view. Can be empty"
-   day_of_week, int, "The range of the days to show."
-   start_time, str, "Start of the event in format **HH:mm** or **HH**. Can't be used together with ``interval``."
-   end_time, str, "End of the event in format **HH:mm** or **HH**. Can't be used together with ``interval``."
-   interval, str, "Start and end of the event in format **HH:mm - HH:mm** or **HH - HH**. Can't be used together with ``start_time`` and ``end_time``."
+   ``name``, str, "Language, which is used for name of the weekday. Supported values: en, ru, ua"
+   ``day``, str, "Title of the view. Can be empty"
+   ``day_of_week``, int, "The range of the days to show."
+   ``start_time``, str, "Start of the event in format **HH:mm** or **HH**. Can't be used together with ``interval``."
+   ``end_time``, str, "End of the event in format **HH:mm** or **HH**. Can't be used together with ``interval``."
+   ``interval``, str, "Start and end of the event in format **HH:mm - HH:mm** or **HH - HH**. Can't be used together with ``start_time`` and ``end_time``."
+
+
+Dates
+-----
+
+The date can be defines using next rules.
+
+1. Allowed year range: [1900, 2100]
+
+2. Any delimiter from the list can be used:
+
+    * ``-``
+
+    * ``.``
+
+    * ``/``
+
+3. Allowed formats:
+
+    * ``YYYY.mm.dd``
+
+    * ``dd.mm.YYYY``
+
+    * ``dd.mm.YY`` - will use 20th century
+
+    * ``dd.mm`` - for the current year
+
+
+As an example, let's look for example at the same data in all formats (assume, that current year is 2019):
+
+* 2019-06-21
+* 21.06.2019
+* 21/06/19
+* 21/06
 
 
 Examples
@@ -79,8 +113,8 @@ Code:
 
 .. code-block:: python
 
-    from core import data
-    from calendar_view import Calendar
+    from calendar_view.core import data
+    from calendar_view.calendar import Calendar
 
     calendar = Calendar.build()
     calendar.add_event(data.event(day_of_week=0, interval='08:00 - 17:00'))
@@ -90,9 +124,9 @@ Code:
 
 Output:
 
-.. image:: docs/simple_view.png
-    :target: docs/simple_view.png
-    :width: 700 px
+.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/simple_view.png
+    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/simple_view.png
+    :width: 600 px
     :align: center
 
 2. Configuration and specific dates
@@ -104,8 +138,8 @@ Code:
 
 .. code-block:: python
 
-    from core import data
-    from calendar_view import Calendar
+    from calendar_view.core import data
+    from calendar_view.calendar import Calendar
 
     config = data.CalendarConfig(
         lang='en',
@@ -128,24 +162,26 @@ Code:
     calendar.add_events(events)
     calendar.save("sprint_23.png")
 
+
 Output:
 
-.. image:: docs/sprint_23.png
-    :target: docs/sprint_23.png
-    :width: 700 px
+.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/sprint_23.png
+    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/sprint_23.png
+    :width: 600 px
     :align: center
 
 
 3. Legend view
 --------------
 
-If the name of event is too long, it can ee printed in the legend
+If the name of event is too long, it can ee printed in the legend.
 
 Code::
 
-    from core import data
-    from core.data import CalendarConfig, event
-    from calendar_view import Calendar
+    from calendar_view.core import data
+    from calendar_view.core.config import CalendarConfig
+    from calendar_view.core.data import event
+    from calendar_view.calendar import Calendar
 
     config = CalendarConfig(
         lang='en',
@@ -177,9 +213,9 @@ Code::
 
 Output:
 
-.. image:: docs/yoga_class.png
-    :target: docs/yoga_class.png
-    :width: 700 px
+.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/yoga_class.png
+    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/yoga_class.png
+    :width: 600 px
     :align: center
 
 

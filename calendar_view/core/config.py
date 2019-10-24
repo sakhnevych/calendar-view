@@ -1,7 +1,8 @@
+import logging
 from typing import Tuple, List
-
-from core import utils, time_utils
 from datetime import date, timedelta
+
+from calendar_view.core import utils, time_utils
 
 
 class CalendarConfig:
@@ -60,10 +61,10 @@ class CalendarConfig:
         self.get_hours_range()
         self.get_date_range()
         if self.dates and self.days:
-            # TODO [OS]: Add warn
+            logging.warning("Both parameters 'days' and 'dates' are used. 'days' value will be skipped.")
             pass
         if self.show_year and not self.show_date:
-            # TODO [OS]: Add warn
+            logging.warning("'show_year' is set to True, but date wont be displayed, because 'show_date' is False.")
             pass
 
     def get_date_range(self) -> Tuple[date, date]:
@@ -74,7 +75,8 @@ class CalendarConfig:
             return time_utils.parse_date_interval(self.dates)
         if self.days:
             return date.today(), date.today() + timedelta(days=self.days)
-        # TODO [OS] log default value - Date range is not defined
+
+        logging.warning("Date range is not defined. Using default range 'Mo - Su'.")
         return time_utils.current_week_day(0), time_utils.current_week_day(6)
 
     def get_hours_range(self) -> Tuple[int, int]:
