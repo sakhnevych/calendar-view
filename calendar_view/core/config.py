@@ -5,7 +5,7 @@ from datetime import date, timedelta
 from calendar_view.core import utils, time_utils
 
 
-class CalendarConfig:
+class CalendarConfig(object):
     """
     Mode will override some parameters.
     Available modes:
@@ -62,10 +62,8 @@ class CalendarConfig:
         self.get_date_range()
         if self.dates and self.days:
             logging.warning("Both parameters 'days' and 'dates' are used. 'days' value will be skipped.")
-            pass
         if self.show_year and not self.show_date:
             logging.warning("'show_year' is set to True, but date wont be displayed, because 'show_date' is False.")
-            pass
 
     def get_date_range(self) -> Tuple[date, date]:
         """

@@ -23,6 +23,7 @@ weekday_dict = {
     'вс': 6,
     'нд': 6,
 }
+time_regex = re.compile(r'^([0-9]{1,2})(:([0-9]{2}))?$')
 
 
 def parse_time(value: str) -> Optional[time]:
@@ -31,7 +32,7 @@ def parse_time(value: str) -> Optional[time]:
     """
     if utils.is_blank(value):
         return None
-    m = re.search(r'^([0-9]{1,2})(:([0-9]{2}))?$', value)
+    m = time_regex.search(value)
     if m is None:
         raise ValueError("Wrong time format: {}. Use: 'hh:mm' or 'hh'".format(value))
     hour = int(m.group(1))

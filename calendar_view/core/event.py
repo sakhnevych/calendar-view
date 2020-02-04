@@ -8,14 +8,14 @@ class Event:
         self.name = name
         self.day = day
         self.day_of_week = day_of_week
-        self.start_time = start_time
-        self.end_time = end_time
+        self.__start_time = start_time
+        self.__end_time = end_time
         self.interval = interval
 
     def validate(self):
-        if is_not_blank(self.interval) and (is_not_blank(self.start_time) or is_not_blank(self.end_time)):
+        if is_not_blank(self.interval) and (is_not_blank(self.__start_time) or is_not_blank(self.__end_time)):
             raise Exception("Start or end time couldn't be defined, if 'interval' exists.")
-        if is_blank(self.interval) and is_blank(self.start_time) and is_blank(self.end_time):
+        if is_blank(self.interval) and is_blank(self.__start_time) and is_blank(self.__end_time):
             raise Exception("At least 'interval' or 'start'-'end' values has to be defined for event.")
         if self.day is None and self.day_of_week is None:
             raise Exception("At least one value has to be specified: 'date' or 'day_of_week'")
@@ -23,8 +23,8 @@ class Event:
             raise Exception("Only one value can be specified: 'date' or 'day_of_week'")
         if self.day_of_week is not None and not (0 <= self.day_of_week <= 6):
             raise Exception("'day_of_week' has to be in the interval [0, 6]. Current value is: {}".format(self.day_of_week))
-        if is_not_blank(self.start_time) or is_not_blank(self.end_time):
-            parse_time_interval('{} - {}'.format(self.start_time, self.end_time))
+        if is_not_blank(self.__start_time) or is_not_blank(self.__end_time):
+            parse_time_interval('{} - {}'.format(self.__start_time, self.end_time))
 
     def get_date(self, config: CalendarConfig) -> date:
         if is_not_blank(self.day):
@@ -36,15 +36,16 @@ class Event:
         result_date = week_day_for_date(start_date, self.day_of_week)
         if start_date <= result_date or end_date <= result_date + timedelta(weeks=1):
             return result_date
-        else:
-            return result_date + timedelta(weeks=1)
+        return result_date + timedelta(weeks=1)
 
-    def get_start_time(self) -> time:
-        if is_not_blank(self.start_time):
-            return parse_time(self.start_time)
+    @property
+    def start_time(self) -> time:
+        if is_not_blank(self.__start_time):
+            return parse_time(self.__start_time)
         return parse_time_interval(self.interval)[0]
 
-    def get_end_time(self) -> time:
-        if is_not_blank(self.end_time):
-            return parse_time(self.end_time)
+    @property
+    def end_time(self) -> time:
+        if is_not_blank(self.__end_time):
+            return parse_time(self.__end_time)
         return parse_time_interval(self.interval)[1]

@@ -81,11 +81,11 @@ class TestTimeUtils(TestCase):
         self.assertEqual((date(2019, 12, 30), date(2020, 1, 3)), time_utils.parse_date_interval('2019-12-30 - 2020-01-03'))
         self.assertEqual((date(2001, 4, 28), date(2001, 4, 28)), time_utils.parse_date_interval('28.04.2001'))
 
-        (start, end) = time_utils.parse_date_interval('Mo - Fr')
+        start, end = time_utils.parse_date_interval('Mo - Fr')
         self.assertEqual(timedelta(days=4), end - start)
-        (start, end) = time_utils.parse_date_interval('we - we')
+        start, end = time_utils.parse_date_interval('we - we')
         self.assertEqual(timedelta(days=7), end - start)
-        (start, end) = time_utils.parse_date_interval('sa - mo')
+        start, end = time_utils.parse_date_interval('sa - mo')
         self.assertEqual(timedelta(days=2), end - start)
 
         self.assertRaises(ValueError, time_utils.parse_date_interval, '2019.03.21 - 2019.03.19')

@@ -4,7 +4,7 @@ from calendar_view.core.config import CalendarConfig
 from calendar_view.core.event import Event
 
 
-class InputData:
+class InputData(object):
     def __init__(self, config: CalendarConfig, events: list):
         self.config = config
         self.events = events
@@ -30,14 +30,14 @@ def validate_event(event: Event, config: CalendarConfig):
             start_date.strftime('%Y-%m-%d'),
             end_date.strftime('%Y-%m-%d')
         ))
-    if event.get_start_time() < start_time:
+    if event.start_time < start_time:
         raise ValueError("Event can't be shown, because its start is before time range: {} is before {}".format(
-            event.get_start_time().strftime('%H:%M'),
+            event.start_time.strftime('%H:%M'),
             start_time.strftime('%H:%M')
         ))
-    if end_hour < 24 and time(hour=end_hour) < event.get_end_time():
+    if end_hour < 24 and time(hour=end_hour) < event.end_time:
         raise ValueError("Event can't be shown, because its end is after time range: {} is before {}".format(
-            event.get_end_time().strftime('%H:%M'),
+            event.end_time.strftime('%H:%M'),
             time(hour=end_hour).strftime('%H:%M')
         ))
 
