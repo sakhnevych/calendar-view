@@ -10,23 +10,17 @@ class InputData(object):
         self.events = events
 
 
-def event(name: str = None, date: str = None, day_of_week: int = None, start_time: str = None, end_time: str = None, interval: str = None):
-    return Event(name, date, day_of_week, start_time, end_time, interval)
-
-
 def validate_config(config: CalendarConfig):
     config.validate()
 
 
 def validate_event(event: Event, config: CalendarConfig):
-    event.validate()
-
     start_date, end_date = config.get_date_range()
     start_time = time(hour=config.get_hours_range()[0])
     end_hour = config.get_hours_range()[1]
-    if not (start_date <= event.get_date(config) <= end_date):
+    if not (start_date <= event.get_start_date(config) <= end_date):
         raise ValueError("Event can't be shown, because it is not in configured date range: {} not in [{}, {}]".format(
-            event.get_date(config).strftime('%Y-%m-%d'),
+            event.get_start_date(config).strftime('%Y-%m-%d'),
             start_date.strftime('%Y-%m-%d'),
             end_date.strftime('%Y-%m-%d')
         ))

@@ -1,3 +1,5 @@
+from typing import List
+
 from PIL import Image, ImageDraw
 
 from calendar_view.config import style
@@ -26,20 +28,25 @@ class Calendar:
         self.grid.draw_grid()
         self.events.draw_grid(self.grid.get_size())
 
-    def add_event_for_time(self, title: str, day_of_week: int, start_time: str, end_time: str):
-        event = data.event(title, day_of_week=day_of_week, start_time=start_time, end_time=end_time)
-        self.events.add_event(event)
-
-    def add_event_with_interval(self, title: str, day_of_week: int, interval: str):
-        event = data.event(title, day_of_week=day_of_week, interval=interval)
-        self.events.add_event(event)
-
-    def add_events(self, events: list):
+    def add_events(self, events: List[Event]) -> None:
+        """
+        Adds the input events to the list to draw them later.
+        :param events: the list of events
+        """
         for e in events:
             self.events.add_event(e)
 
-    def add_event(self, event: Event):
-        self.events.add_event(event)
+    def add_event(self, *events: Event, **kwargs) -> None:
+        """
+        Adds the event(s) to the list to draw them later.
+        :param events: the event objects
+        :param kwargs: the input arguments for the Event constructor
+        """
+        if events:
+            for event in events:
+                self.events.add_event(event)
+        if kwargs:
+            self.events.add_event(Event(**kwargs))
 
     def save(self, filename: str):
         self._build_image()
