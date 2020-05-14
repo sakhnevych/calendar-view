@@ -1,3 +1,20 @@
+.. image:: https://img.shields.io/pypi/v/calendar-view.svg
+   :target: https://pypi.org/project/calendar-view/
+   :alt: PyPi Package Version
+
+.. image:: https://img.shields.io/pypi/pyversions/calendar-view.svg
+   :target: https://pypi.org/project/calendar-view/
+   :alt: Supported Python versions
+
+.. image:: https://img.shields.io/pypi/dm/calendar-view
+   :target: https://pypi.org/project/calendar-view/
+   :alt: PyPi Package Monthly Download
+
+.. image:: https://img.shields.io/pypi/l/calendar-view.svg
+   :target: https://opensource.org/licenses/MIT
+   :alt: MIT License
+
+
 =============
 Calendar View
 =============
