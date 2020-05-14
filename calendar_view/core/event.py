@@ -65,19 +65,31 @@ class Event(object):
         self.__validate()
 
     @staticmethod
-    def __parse_start_date(day_of_week: int, day: Union[date, datetime, str], start: Union[datetime, time, str]) -> Optional[date]:
-        if sum([day_of_week is not None, day is not None, start is not None and isinstance(start, datetime)]) != 1:
-            raise ValueError("One argument from the list has to be defined: 'day_of_week'; 'day'; 'start' as a datetime value")
-        return Event.__parse_date(day, start)
+    def __parse_start_date(day_of_week: Optional[int],
+                           day: Union[date, datetime, str],
+                           start: Optional[Union[datetime, time, str]]) -> Optional[date]:
+        if day_of_week is not None and day is not None:
+            raise ValueError("'day_of_week' is defined together with a 'day'.")
+        if day_of_week is not None and (start is not None and isinstance(start, datetime)):
+            raise ValueError("'day_of_week' is defined together with a 'start' as a datetime.")
+        return Event.__parse_date(day_of_week, day, start)
 
     @staticmethod
-    def __parse_end_date(day_of_week: int, day: Union[date, datetime, str], end: Union[datetime, time, str]) -> Optional[date]:
-        if sum([day_of_week is not None, day is not None, end is not None and isinstance(end, datetime)]) != 1:
-            raise ValueError("One argument from the list has to be defined: 'day_of_week'; 'day'; 'end' as a datetime value")
-        return Event.__parse_date(day, end)
+    def __parse_end_date(day_of_week: Optional[int],
+                         day: Optional[Union[date, datetime, str]],
+                         end: Optional[Union[datetime, time, str]]) -> Optional[date]:
+        if day_of_week is not None and day is not None:
+            raise ValueError("'day_of_week' is defined together with a 'day'.")
+        if day_of_week is not None and (end is not None and isinstance(end, datetime)):
+            raise ValueError("'day_of_week' is defined together with a 'end' as a datetime.")
+        return Event.__parse_date(day_of_week, day, end)
 
     @staticmethod
-    def __parse_date(day: Union[date, datetime, str], time_entry: Union[datetime, time, str]) -> Optional[date]:
+    def __parse_date(day_of_week: Optional[int],
+                     day: Optional[Union[date, datetime, str]],
+                     time_entry: Optional[Union[datetime, time, str]]) -> Optional[date]:
+        if day_of_week:
+            return None
         if day:
             if isinstance(day, date):
                 return day

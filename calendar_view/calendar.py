@@ -3,7 +3,6 @@ from typing import List
 from PIL import Image, ImageDraw
 
 from calendar_view.config import style
-from calendar_view.core import data
 from calendar_view.core import utils
 from calendar_view.core.calendar_events import CalendarEvents
 from calendar_view.core.calendar_grid import CalendarGrid
