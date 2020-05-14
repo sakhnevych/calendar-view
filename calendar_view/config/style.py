@@ -27,10 +27,10 @@ line_day_width = 5
 line_hour_color = (180, 180, 180, 210)
 line_hour_width = 2
 
-event_border = (120, 180, 120, 240)
 event_border_width = 4
 event_radius = 14
-event_fill = (196, 234, 188, 180)
+event_border_default = (120, 180, 120, 240)
+event_fill_default = (196, 234, 188, 180)
 
 event_name_font = ImageFont.truetype(arial, 36)
 event_name_color = 'black'

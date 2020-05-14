@@ -1,18 +1,45 @@
 from datetime import datetime
 from typing import Union
 
+from calendar_view.config import style
 from calendar_view.core.config import CalendarConfig
 from calendar_view.core.time_utils import *
 from calendar_view.core.utils import *
 
 
+class EventStyle(object):
+    """
+    Defined the style of the painted event.
+    """
+    def __init__(self, event_border: Tuple[int, int, int, int] = None, event_fill: Tuple[int, int, int, int] = None) -> None:
+        """
+        :param event_border: the color of the border as a tuple (r, g, b, a)
+            Example: (120, 180, 120, 240) - green
+        :param event_fill: the color of the background as a tuple (r, g, b, a)
+            Example: (196, 234, 188, 180) - light green
+        """
+        self.event_border = event_border if event_border else style.event_border_default
+        self.event_fill = event_fill if event_fill else style.event_fill_default
+
+
+class EventStyles(object):
+    """
+    Predefined colors
+    """
+    GREEN = EventStyle(event_border=(120, 180, 120, 240), event_fill=(196, 234, 188, 180))
+    RED = EventStyle(event_border=(220, 50, 50, 240), event_fill=(220, 50, 50, 180))
+    BLUE = EventStyle(event_border=(100, 100, 220, 240), event_fill=(150, 150, 234, 180))
+    GRAY = EventStyle(event_border=(110, 110, 110, 240), event_fill=(200, 200, 200, 190))
+
+
 class Event(object):
     def __init__(self, name: str = None, day_of_week: int = None, day: Union[date, datetime, str] = None,
-                 start: Union[datetime, time, str] = None, end: Union[datetime, time, str] = None) -> None:
+                 start: Union[datetime, time, str] = None, end: Union[datetime, time, str] = None, style: EventStyle = None) -> None:
         if day_of_week and not (0 <= day_of_week <= 6):
             raise ValueError("'day_of_week' has to be in the interval [0, 6]. Current value is: {}".format(day_of_week))
 
         self.name: str = name
+        self.style: EventStyle = style if style else EventStyle()
 
         # parse date of the event
         self.__start_date: date = self.__parse_start_date(day_of_week, day, start)
@@ -39,13 +66,13 @@ class Event(object):
 
     @staticmethod
     def __parse_start_date(day_of_week: int, day: Union[date, datetime, str], start: Union[datetime, time, str]) -> Optional[date]:
-        if sum([day_of_week is not None, day is not None, start is not None and start is datetime]) != 1:
+        if sum([day_of_week is not None, day is not None, start is not None and isinstance(start, datetime)]) != 1:
             raise ValueError("One argument from the list has to be defined: 'day_of_week'; 'day'; 'start' as a datetime value")
         return Event.__parse_date(day, start)
 
     @staticmethod
     def __parse_end_date(day_of_week: int, day: Union[date, datetime, str], end: Union[datetime, time, str]) -> Optional[date]:
-        if sum([day_of_week is not None, day is not None, end is not None and end is datetime]) != 1:
+        if sum([day_of_week is not None, day is not None, end is not None and isinstance(end, datetime)]) != 1:
             raise ValueError("One argument from the list has to be defined: 'day_of_week'; 'day'; 'end' as a datetime value")
         return Event.__parse_date(day, end)
 
