@@ -1,10 +1,11 @@
-from datetime import date, time
+import logging
+from datetime import date, time, datetime, timedelta
 from typing import List, Tuple
 
 from PIL import Image, ImageDraw
 
 from calendar_view.config import i18n, style
-from calendar_view.core import data
+from calendar_view.core import data, time_utils
 from calendar_view.core.config import CalendarConfig
 from calendar_view.core.event import Event
 from calendar_view.core.round_rectangle import draw_rounded_rectangle
@@ -22,9 +23,48 @@ class CalendarEvents(object):
         self.event_image = Image.new("RGBA", size, (0, 0, 0, 0))
         self.event_draw = ImageDraw.Draw(self.event_image)
 
-    def add_event(self, event: Event):
+    def add_event(self, event: Event) -> None:
+        """
+        Skip the empty events with a duration of fewer than 0 seconds.
+        Splits events, if needed, to the separate days. The event in the result list has to be for 1 day only.
+        Cut the event's time out of the visible time range.
+        Validate events.
+        """
+        if event.get_duration_seconds(self.config) < 1:
+            logging.warning(f"Skipping event, the duration is too small: {event}")
+            return
+        end_date: date = event.get_end_date(self.config)
+        start_date: date = event.get_start_date(self.config)
+        if end_date < self.config.get_date_range()[0]:
+            logging.warning(f"Skipping event, it ends before the visible range: {event}")
+            return
+        if start_date > self.config.get_date_range()[1]:
+            logging.warning(f"Skipping event, it starts after the visible range: {event}")
+            return
+
+        if start_date == end_date or ((end_date - start_date).days == 1 and event.end_time == time(0, 0)):
+            self.__do_add_event(event)
+        else:
+            logging.debug(f'Splitting the event: {event}')
+            iter_from: date = max(start_date, self.config.get_date_range()[0])
+            iter_to: date = min(end_date, self.config.get_date_range()[1])
+            for single_date in time_utils.date_range(iter_from, iter_to):
+                next_date: date = single_date + timedelta(days=1)
+                if single_date == start_date:
+                    fr: datetime = datetime.combine(single_date, event.start_time)
+                    to: datetime = datetime.combine(next_date, time(0, 0))
+                elif single_date == end_date:
+                    fr: datetime = datetime.combine(single_date, time(0, 0))
+                    to: datetime = datetime.combine(single_date, event.end_time)
+                else:
+                    fr: datetime = datetime.combine(single_date, time(0, 0))
+                    to: datetime = datetime.combine(next_date, time(0, 0))
+                self.__do_add_event(Event(name=event.name, style=event.style, start=fr, end=to))
+
+    def __do_add_event(self, event: Event) -> None:
         data.validate_event(event, self.config)
         self.events.append(event)
+        logging.debug(f'Added internal event: {event}')
 
         # if legend is needed
         if self.config.legend is None and event.name is not None:
@@ -36,6 +76,9 @@ class CalendarEvents(object):
                 self.config.legend = True
 
     def _draw_event(self, event: Event):
+        """
+        The events have already been split to the separate days. The event is for 1 day only.
+        """
         day_number = (event.get_start_date(self.config) - self.config.get_date_range()[0]).days
         x = self.__get_event_x(day_number)
         y = self.__get_event_y(event.start_time, event.end_time)
@@ -102,7 +145,8 @@ class CalendarEvents(object):
             return '{}, {}'.format(weekday, date)
 
     def __get_event_y(self, start: time, end: time):
-        start_hour, end_hour = start.hour, end.hour
+        start_hour: int = start.hour
+        end_hour: int = 24 if (end.hour == 0 and end.minute == 0) else end.hour
         config_start_hour = self.config.get_hours_range()[0]
         if config_start_hour > 0:
             start_hour -= config_start_hour

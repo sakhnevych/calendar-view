@@ -1,5 +1,5 @@
 import re
-from datetime import time, date, timedelta
+from datetime import time, date, timedelta, datetime
 from typing import Tuple, Optional
 
 from calendar_view.core import utils
@@ -161,3 +161,21 @@ def parse_date_interval(dates: str) -> Optional[Tuple[date, date]]:
         raise ValueError('Maximum allowed range of days is {}. But {} is configured.'.format(MAX_DAYS_RANGE_ALLOWED, (end - start).days))
 
     return start, end
+
+
+def date_range(start_date: date, end_date: date):
+    """
+    Iterate through dates.
+    """
+    if end_date < start_date:
+        raise ValueError(f'{start_date} is after the {end_date}')
+    for n in range(int((end_date - start_date).days) + 1):
+        yield start_date + timedelta(n)
+
+
+def get_week_borders(any_time: datetime) -> Tuple[date, date]:
+    """
+    Returns the start end the end of the week.
+    """
+    start: datetime = any_time - timedelta(days=any_time.weekday())
+    return start.date(), start + timedelta(days=6)
