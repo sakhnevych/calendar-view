@@ -77,11 +77,10 @@ Event
    :widths: 20, 10, 70
 
    ``name``, str, "Language, which is used for name of the weekday. Supported values: en, ru, ua"
-   ``day``, str, "Title of the view. Can be empty"
-   ``day_of_week``, int, "The range of the days to show."
-   ``start_time``, str, "Start of the event in format **HH:mm** or **HH**. Can't be used together with ``interval``."
-   ``end_time``, str, "End of the event in format **HH:mm** or **HH**. Can't be used together with ``interval``."
-   ``interval``, str, "Start and end of the event in format **HH:mm - HH:mm** or **HH - HH**. Can't be used together with ``start_time`` and ``end_time``."
+   ``day``, str / date / datetime, "The day of the event. Can be set using any of 3 different types. Can't be defined together with ``day_of_week``"
+   ``day_of_week``, int, "The range of the days to show. Can't be defined together with ``day``"
+   ``start``, str / time / datetime, "Start of the event. Can be set using any of 3 different types. String has format **HH:mm** or **HH**."
+   ``end``, str / time / datetime, "End of the event. Can be set using any of 3 different types. String has format **HH:mm** or **HH**."
 
 
 Dates
@@ -130,13 +129,13 @@ Code:
 
 .. code-block:: python
 
-    from calendar_view.core import data
     from calendar_view.calendar import Calendar
+    from calendar_view.core.event import EventStyles
 
     calendar = Calendar.build()
-    calendar.add_event(data.event(day_of_week=0, interval='08:00 - 17:00'))
-    calendar.add_event(data.event(day_of_week=5, interval='10:00 - 13:00'))
-    calendar.add_event(data.event(day_of_week=6, interval='15:00 - 18:00'))
+    calendar.add_event(day_of_week=0, start='08:00', end='17:00', style=EventStyles.GRAY)
+    calendar.add_event(day_of_week=5, start='10:00', end='13:00', style=EventStyles.BLUE)
+    calendar.add_event(day_of_week=6, start='15:00', end='18:00')
     calendar.save("simple_view.png")
 
 Output:
@@ -155,8 +154,9 @@ Code:
 
 .. code-block:: python
 
-    from calendar_view.core import data
     from calendar_view.calendar import Calendar
+    from calendar_view.core import data
+    from calendar_view.core.event import Event
 
     config = data.CalendarConfig(
         lang='en',
@@ -167,9 +167,9 @@ Code:
         legend=False,
     )
     events = [
-        data.event('Planning', date='2019-09-23', interval='11:00 - 13:00'),
-        data.event('Demo', date='2019-09-27', interval='15:00 - 16:00'),
-        data.event('Retrospective', date='2019-09-27', interval='17:00 - 18:00'),
+        Event('Planning', day='2019-09-23', start='11:00', end='13:00'),
+        Event('Demo', day='2019-09-27', start='15:00', end='16:00'),
+        Event('Retrospective', day='2019-09-27', start='17:00', end='18:00'),
     ]
 
     data.validate_config(config)
@@ -197,8 +197,8 @@ Code::
 
     from calendar_view.core import data
     from calendar_view.core.config import CalendarConfig
-    from calendar_view.core.data import event
     from calendar_view.calendar import Calendar
+    from calendar_view.core.event import Event
 
     config = CalendarConfig(
         lang='en',
@@ -209,15 +209,15 @@ Code::
         legend=True,
     )
     events = [
-        event(day_of_week=0, interval='11:00 - 12:30', name='Ashtanga, 90 mins, with Gina'),
-        event(day_of_week=1, interval='18:00 - 19:15', name='HOT Core Yoga, 75 mins, with David'),
-        event(day_of_week=2, interval='09:00 - 10:00', name='Meditation - Yoga Nidra, 60 mins, with Heena'),
-        event(day_of_week=2, interval='19:00 - 20:15', name='Hatha Yoga, 75 mins, with Jo'),
-        event(day_of_week=3, interval='19:00 - 20:00', name='Pilates, 60 mins, with Erika'),
-        event(day_of_week=4, interval='18:30 - 20:00', name='Kundalini Yoga, 90 mins, with Dan'),
-        event(day_of_week=5, interval='10:00 - 11:15', name='Hatha Yoga, 75 mins, with Amelia'),
-        event(day_of_week=6, interval='10:00 - 11:15', name='Yoga Open, 75 mins, with Klaudia'),
-        event(day_of_week=6, interval='14:00 - 15:15', name='Hatha Yoga, 75 mins, with Vick'),
+        Event(day_of_week=0, start='11:00', end='12:30', name='Ashtanga, 90 mins, with Gina'),
+        Event(day_of_week=1, start='18:00', end='19:15', name='HOT Core Yoga, 75 mins, with David'),
+        Event(day_of_week=2, start='09:00', end='10:00', name='Meditation - Yoga Nidra, 60 mins, with Heena'),
+        Event(day_of_week=2, start='19:00', end='20:15', name='Hatha Yoga, 75 mins, with Jo'),
+        Event(day_of_week=3, start='19:00', end='20:00', name='Pilates, 60 mins, with Erika'),
+        Event(day_of_week=4, start='18:30', end='20:00', name='Kundalini Yoga, 90 mins, with Dan'),
+        Event(day_of_week=5, start='10:00', end='11:15', name='Hatha Yoga, 75 mins, with Amelia'),
+        Event(day_of_week=6, start='10:00', end='11:15', name='Yoga Open, 75 mins, with Klaudia'),
+        Event(day_of_week=6, start='14:00', end='15:15', name='Hatha Yoga, 75 mins, with Vick'),
     ]
 
     data.validate_config(config)
