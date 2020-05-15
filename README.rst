@@ -193,7 +193,9 @@ Output:
 
 If the name of event is too long, it can ee printed in the legend.
 
-Code::
+Code:
+
+.. code-block:: python
 
     from calendar_view.core import data
     from calendar_view.core.config import CalendarConfig
