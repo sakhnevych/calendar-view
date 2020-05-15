@@ -5,7 +5,7 @@ with open("README.rst", "r") as f:
 
 setuptools.setup(
     name="calendar-view",
-    version="1.0.0",
+    version="1.1.0",
     author="Oleksandr Sakhnevych",
     author_email="o.sakhnevych@gmail.com",
     description="Library provides a graphical view of the calendar.",
@@ -17,6 +17,9 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        'Pillow',
     ],
     python_requires='>=3.6',
 )
