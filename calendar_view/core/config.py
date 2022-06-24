@@ -1,8 +1,11 @@
 import logging
-from typing import Tuple, List
 from datetime import date, timedelta
+from typing import Tuple, List, Literal
 
-from calendar_view.core import utils, time_utils
+from calendar_view.core import time_utils
+from calendar_view.core.utils import StringUtils
+
+VerticalAlign = Literal['top', 'center', 'bottom']
 
 
 class CalendarConfig(object):
@@ -23,8 +26,8 @@ class CalendarConfig(object):
                  mode: str = None,
                  show_date: bool = True,
                  show_year: bool = False,
-                 legend: bool = None
-                 ):
+                 legend: bool = None,
+                 title_vertical_align: VerticalAlign = 'center'):
         self.lang = lang
         self.title = title
         self.dates = dates
@@ -34,6 +37,7 @@ class CalendarConfig(object):
         self.show_date = show_date
         self.show_year = show_year
         self.legend = legend
+        self.title_vertical_align = title_vertical_align
         self._configure_mode()
 
     def _configure_mode(self):
@@ -54,7 +58,7 @@ class CalendarConfig(object):
             self.hours = '8:00 - 19:00'
 
     def validate(self):
-        if utils.is_blank(self.lang):
+        if StringUtils.is_blank(self.lang):
             raise Exception("Parameter 'lang' is empty. Language has to be specified")
         if not (0 < self.days <= 14):
             raise Exception("Parameter 'days' can be in interval [1, 14]")
@@ -69,10 +73,10 @@ class CalendarConfig(object):
         """
         Returns tuple of start and end day for visualisation. For example: 'date(2019, 05, 17), date(2019, 05, 20)'
         """
-        if utils.is_not_blank(self.dates):
+        if StringUtils.is_not_blank(self.dates):
             return time_utils.parse_date_interval(self.dates)
         if self.days:
-            return date.today(), date.today() + timedelta(days=self.days)
+            return date.today(), date.today() + timedelta(days=self.days - 1)
 
         logging.warning("Date range is not defined. Using default range 'Mo - Su'.")
         return time_utils.current_week_day(0), time_utils.current_week_day(6)
@@ -81,7 +85,7 @@ class CalendarConfig(object):
         """
         Returns tuple of start and end hour for visualisation. For example: '10, 18'
         """
-        if utils.is_blank(self.hours):
+        if StringUtils.is_blank(self.hours):
             return 0, 24
 
         start, end = time_utils.parse_time_interval(self.hours)
