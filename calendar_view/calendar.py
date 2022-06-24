@@ -3,11 +3,11 @@ from typing import List
 from PIL import Image, ImageDraw
 
 from calendar_view.config import style
-from calendar_view.core import utils
 from calendar_view.core.calendar_events import CalendarEvents
 from calendar_view.core.calendar_grid import CalendarGrid
 from calendar_view.core.config import CalendarConfig
 from calendar_view.core.event import Event
+from calendar_view.core.utils import StringUtils
 
 
 class Calendar:
@@ -72,7 +72,7 @@ class Calendar:
         """
         Add title and combine all images into one.
         """
-        if utils.is_blank(title) and legend is None:
+        if StringUtils.is_blank(title) and legend is None:
             return events
 
         event_width, event_height = events.size

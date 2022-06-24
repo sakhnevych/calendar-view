@@ -2,7 +2,7 @@ import re
 from datetime import time, date, timedelta, datetime
 from typing import Tuple, Optional
 
-from calendar_view.core import utils
+from calendar_view.core.utils import StringUtils
 
 MAX_DAYS_RANGE_ALLOWED = 15
 ZERO_TIME = time(0, 0)
@@ -30,7 +30,7 @@ def parse_time(value: str) -> Optional[time]:
     """
     Parses time value. Can be used format: 'hh:mm' or 'hh'
     """
-    if utils.is_blank(value):
+    if StringUtils.is_blank(value):
         return None
     m = time_regex.search(value)
     if m is None:
@@ -141,7 +141,7 @@ def _parse_date(parsed: list) -> date:
 
 def parse_date_interval(dates: str) -> Optional[Tuple[date, date]]:
     dates = dates.strip()
-    if utils.is_blank(dates):
+    if StringUtils.is_blank(dates):
         return None
 
     if ' - ' not in dates:

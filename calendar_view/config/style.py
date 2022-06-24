@@ -1,16 +1,12 @@
 from PIL import ImageFont
 from pkg_resources import resource_filename
 
-font_default = 'Arial.ttf'
-font_fallback = 'OldStandard-Regular.ttf'
+font_path: str = 'Roboto-Regular.ttf'
 
 
 def image_font(size: int):
-    try:
-        return ImageFont.truetype(font_default, size)
-    except OSError:
-        font_path: str = resource_filename('calendar_view.resources.fonts', font_fallback)
-        return ImageFont.truetype(font_path, size)
+    path: str = resource_filename('calendar_view.resources.fonts', font_path)
+    return ImageFont.truetype(path, size)
 
 
 image_bg = (255, 255, 255, 255)
@@ -41,10 +37,14 @@ line_hour_width = 2
 event_border_width = 4
 event_radius = 14
 event_border_default = (120, 180, 120, 240)
-event_fill_default = (196, 234, 188, 180)
+event_fill_default = (196, 234, 188, 210)
 
-event_name_font = image_font(36)
-event_name_color = 'black'
+event_title_font = image_font(36)
+event_title_color = 'black'
+event_notes_font = image_font(26)
+event_notes_color = 'gray'
+event_padding: int = 20
+event_title_margin: int = 20
 
 legend_spacing = 20
 legend_padding_top = 40

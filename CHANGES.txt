@@ -1,3 +1,11 @@
-v1.0.0, 14.10.19 -- Initial release.
+Version 1.0.0, 2019-10-14
+- Initial release.
 
-v1.2.0, 25.05.21 -- Fixed font error.
+Version 1.2.0, 2021-05-25
+- Fix font error.
+
+Version 2.0.0, 2022-06-24
+- Add a font as a resource. The generated image is the same in all operating systems now.
+- Fix a bug with a date range and day of week config.
+- Add notes to the calendar event.
+- Fit the title and notes to the event's width.
