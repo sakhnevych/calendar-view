@@ -1,4 +1,5 @@
-from typing import List
+from collections import defaultdict
+from typing import List, NoReturn
 
 from PIL import Image, ImageDraw
 
@@ -47,7 +48,51 @@ class Calendar:
         if kwargs:
             self.events.add_event(Event(**kwargs))
 
-    def save(self, filename: str):
+    def cascade(self):
+        group_counter: int = 1
+        groups: dict[int, list[Event]] = defaultdict(list)
+        for i in self.events.events:
+            for j in self.events.events:
+                if j == i:
+                    pass
+                else:
+                    if i.start_time < j.start_time < i.end_time and i.get_day() == j.get_day():
+                        if i.cascade_group == 0 and j.cascade_group == 0:
+                            i.cascade_group = group_counter
+                            j.cascade_group = group_counter
+                            group_counter += 1
+                        elif i.cascade_group == 0 and j.cascade_group != 0 or i.cascade_group != 0 and j.cascade_group == 0:
+                            group_index: int = max(i.cascade_group, j.cascade_group)
+                            i.cascade_group, j.cascade_group = group_index, group_index
+                        elif i.cascade_group != j.cascade_group:
+                            for k in self.events.events:
+                                if k.cascade_group == i.cascade_group:
+                                    k.cascade_group = j.cascade_group
+
+
+        for i in self.events.events:
+            if i.cascade_group == 0:
+                group_counter += 1
+                i.cascade_group = group_counter
+            group: list[Event] = groups[i.cascade_group]
+            group.append(i)
+        for i in groups.values():
+            total_group_cascade: int = len(i)
+            event_index: int = 1
+            for j in i:
+                j.cascade_index = event_index
+                event_index += 1
+                j.cascade_total = total_group_cascade
+
+        for i in groups.values():
+            if len(i) > 1:
+                for j in i:
+                    for k in i:
+                        if j.cascade_index > k.cascade_index and j.start_time < k.start_time:
+                            j.cascade_index, k.cascade_index = k.cascade_index, j.cascade_index
+
+    def save(self, filename: str) -> NoReturn:
+        self.cascade()
         self._build_image()
         self.full_image.save(filename, "PNG")
 

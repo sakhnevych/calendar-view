@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, NoReturn
 
 from calendar_view.config import style
 from calendar_view.core.config import CalendarConfig
@@ -66,8 +66,12 @@ class Event(object):
         self.__start_time: time = Event.__parse_time(start)
         self.__end_time: time = Event.__parse_time(end)
 
+        self.cascade_total: int = 1
+        self.cascade_index: int = 1
+        self.cascade_group: int = 0
         # run additional validation
         self.__validate()
+
 
     @staticmethod
     def __parse_start_date(day_of_week: Optional[int],
@@ -114,6 +118,9 @@ class Event(object):
             return time_entry
         if isinstance(time_entry, str):
             return parse_time(time_entry)
+
+    def get_day(self):
+        return self.__start_date
 
     def __validate(self):
         if self.__start_date is None and self.__day_of_week is None:
@@ -165,6 +172,19 @@ class Event(object):
     @property
     def end_time(self) -> time:
         return self.__end_time
+
+    def get_cascade(self) -> int:
+        return self.cascade_total
+
+    def casc_up(self) -> NoReturn:
+        self.cascade_total = self.cascade_total + 1
+
+    def cascade_index_up(self) -> NoReturn:
+        self.cascade_index = self.cascade_index + 1
+
+    def get_cascade_index(self) -> int:
+        return self.cascade_index
+
 
     def __repr__(self) -> str:
         return f'Event[title: {self.title}, notes: {self.notes}, style: {self.style}, ' \

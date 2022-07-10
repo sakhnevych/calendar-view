@@ -99,8 +99,12 @@ class CalendarEvents(object):
         day_number = (event.get_start_date(self.config) - self.config.get_date_range()[0]).days
         x = self.__get_event_x(day_number)
         y = self.__get_event_y(event.start_time, event.end_time)
-        p1 = (x[0] + style.line_day_width/2, y[0])
-        p2 = (x[1] - style.line_day_width/2, y[1])
+        event_width: int = x[1] - x[0] - style.line_day_width
+        cascade_event_width: int = event_width / event.cascade_total
+        x1 = x[0] + style.line_day_width / 2 + (event.cascade_index - 1) * cascade_event_width
+        x2 = x1 + cascade_event_width
+        p1 = (x1, y[0])
+        p2 = (x2, y[1])
         draw_rounded_rectangle(self.event_draw, [p1, p2], style.event_radius, outline=event.style.event_border,
                                fill=event.style.event_fill, width=style.event_border_width)
 
@@ -130,7 +134,7 @@ class CalendarEvents(object):
                                                                                   total_text_height=total_height)
             # the top-left position of the title block
             title_pos: tuple[int, int] = (
-                (x[0] + x[1]) / 2 - title_metadata.size[0] / 2,
+                (p1[0] + p2[0]) / 2 - title_metadata.size[0] / 2,
                 y_top_offset + y_text_offset
             )
             self.event_draw.multiline_text(title_pos, title_metadata.text, align='center',
@@ -149,7 +153,7 @@ class CalendarEvents(object):
                                                                                  total_text_height=total_height)
             # the top-left position of the notes block
             notes_pos: tuple[int, int] = (
-                x[0] + style.event_padding,
+                p1[0] + style.event_padding,
                 y_top_offset + y_text_offset
             )
             self.event_draw.multiline_text(notes_pos, notes_metadata.text, align='left',
