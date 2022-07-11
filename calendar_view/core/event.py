@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, NoReturn
 
 from calendar_view.config import style
 from calendar_view.core.config import CalendarConfig
@@ -66,8 +66,12 @@ class Event(object):
         self.__start_time: time = Event.__parse_time(start)
         self.__end_time: time = Event.__parse_time(end)
 
+        self.cascade_total: int = 1
+        self.cascade_index: int = 1
+        self.cascade_group: int = 0
         # run additional validation
         self.__validate()
+
 
     @staticmethod
     def __parse_start_date(day_of_week: Optional[int],
@@ -169,7 +173,9 @@ class Event(object):
     def __repr__(self) -> str:
         return f'Event[title: {self.title}, notes: {self.notes}, style: {self.style}, ' \
                f'day_of_week: {self.__day_of_week}, start_date: {self.__start_date}, end_date: {self.__end_date}, ' \
-               f'start_time: {self.start_time}, end_time: {self.end_time}]'
+               f'start_time: {self.start_time}, end_time: {self.end_time},' \
+               f'cascade_group: {self.cascade_group}, cascade_total: {self.cascade_total}, ' \
+               f'cascade_index: {self.cascade_index}]'
 
     def __eq__(self, other) -> bool:
         return isinstance(other, Event) \
@@ -180,4 +186,7 @@ class Event(object):
                and self.__start_date == other.__start_date \
                and self.__end_date == other.__end_date \
                and self.start_time == other.start_time \
-               and self.end_time == other.end_time
+               and self.end_time == other.end_time \
+               and self.cascade_group == other.cascade_group \
+               and self.cascade_total == other.cascade_total \
+               and self.cascade_index == other.cascade_index

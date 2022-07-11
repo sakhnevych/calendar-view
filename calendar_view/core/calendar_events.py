@@ -1,5 +1,6 @@
 import logging
 import textwrap
+from collections import defaultdict
 from datetime import date, time, datetime, timedelta
 from typing import List, Tuple, Optional, NoReturn
 
@@ -92,6 +93,47 @@ class CalendarEvents(object):
             if width < text_size[0] or height < text_size[1]:
                 self.config.legend = True
 
+    def group_cascade_events(self) -> NoReturn:
+        group_counter: int = 1
+        groups: dict[int, list[Event]] = defaultdict(list)
+        for i in self.events:
+            for j in self.events:
+                if j == i:
+                    pass
+                else:
+                    if i.start_time < j.start_time < i.end_time \
+                            and i.get_start_date(self.config) == j.get_start_date(self.config):
+                        if i.cascade_group == 0 and j.cascade_group == 0:
+                            i.cascade_group = group_counter
+                            j.cascade_group = group_counter
+                            group_counter += 1
+                        elif i.cascade_group == 0 and j.cascade_group != 0 or i.cascade_group != 0 \
+                                and j.cascade_group == 0:
+                            group_index: int = max(i.cascade_group, j.cascade_group)
+                            i.cascade_group, j.cascade_group = group_index, group_index
+                        elif i.cascade_group != j.cascade_group:
+                            for k in self.events:
+                                if k.cascade_group == i.cascade_group:
+                                    k.cascade_group = j.cascade_group
+
+        for i in self.events:
+            if i.cascade_group > 0:
+                group: list[Event] = groups[i.cascade_group]
+                group.append(i)
+        for i in groups.values():
+            total_group_cascade: int = len(i)
+            event_index: int = 1
+            for j in i:
+                j.cascade_index = event_index
+                event_index += 1
+                j.cascade_total = total_group_cascade
+
+        for i in groups.values():
+            for j in i:
+                for k in i:
+                    if j.cascade_index > k.cascade_index and j.start_time < k.start_time:
+                        j.cascade_index, k.cascade_index = k.cascade_index, j.cascade_index
+
     def _draw_event(self, event: Event) -> NoReturn:
         """
         The events have already been split to the separate days. The event is for 1 day only.
@@ -99,8 +141,12 @@ class CalendarEvents(object):
         day_number = (event.get_start_date(self.config) - self.config.get_date_range()[0]).days
         x = self.__get_event_x(day_number)
         y = self.__get_event_y(event.start_time, event.end_time)
-        p1 = (x[0] + style.line_day_width/2, y[0])
-        p2 = (x[1] - style.line_day_width/2, y[1])
+        event_width: int = x[1] - x[0] - style.line_day_width
+        cascade_event_width: int = event_width / event.cascade_total
+        x1 = x[0] + style.line_day_width / 2 + (event.cascade_index - 1) * cascade_event_width
+        x2 = x1 + cascade_event_width
+        p1 = (x1, y[0])
+        p2 = (x2, y[1])
         draw_rounded_rectangle(self.event_draw, [p1, p2], style.event_radius, outline=event.style.event_border,
                                fill=event.style.event_fill, width=style.event_border_width)
 
@@ -130,7 +176,7 @@ class CalendarEvents(object):
                                                                                   total_text_height=total_height)
             # the top-left position of the title block
             title_pos: tuple[int, int] = (
-                (x[0] + x[1]) / 2 - title_metadata.size[0] / 2,
+                (p1[0] + p2[0]) / 2 - title_metadata.size[0] / 2,
                 y_top_offset + y_text_offset
             )
             self.event_draw.multiline_text(title_pos, title_metadata.text, align='center',
@@ -149,7 +195,7 @@ class CalendarEvents(object):
                                                                                  total_text_height=total_height)
             # the top-left position of the notes block
             notes_pos: tuple[int, int] = (
-                x[0] + style.event_padding,
+                p1[0] + style.event_padding,
                 y_top_offset + y_text_offset
             )
             self.event_draw.multiline_text(notes_pos, notes_metadata.text, align='left',
@@ -214,8 +260,10 @@ class CalendarEvents(object):
             start_hour -= config_start_hour
             end_hour -= config_start_hour
 
-        y_start = style.padding_vertical + style.hour_height + start_hour * style.hour_height + (start.minute / 60) * style.hour_height
-        y_end = style.padding_vertical + style.hour_height + end_hour * style.hour_height + (end.minute / 60) * style.hour_height
+        y_start = style.padding_vertical + style.hour_height + start_hour * style.hour_height + (
+                    start.minute / 60) * style.hour_height
+        y_end = style.padding_vertical + style.hour_height + end_hour * style.hour_height + (
+                    end.minute / 60) * style.hour_height
         return y_start, y_end
 
     @staticmethod

@@ -9,3 +9,6 @@ Version 2.0.0, 2022-06-24
 - Fix a bug with a date range and day of week config.
 - Add notes to the calendar event.
 - Fit the title and notes to the event's width.
+
+Version 2.1.0, 2022-07-11
+- Add cascade view of events.
