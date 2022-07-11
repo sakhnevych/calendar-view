@@ -119,9 +119,6 @@ class Event(object):
         if isinstance(time_entry, str):
             return parse_time(time_entry)
 
-    def get_day(self):
-        return self.__start_date
-
     def __validate(self):
         if self.__start_date is None and self.__day_of_week is None:
             raise ValueError("Either date of the start event or the day of the week has to be defined.")
@@ -173,23 +170,12 @@ class Event(object):
     def end_time(self) -> time:
         return self.__end_time
 
-    def get_cascade(self) -> int:
-        return self.cascade_total
-
-    def casc_up(self) -> NoReturn:
-        self.cascade_total = self.cascade_total + 1
-
-    def cascade_index_up(self) -> NoReturn:
-        self.cascade_index = self.cascade_index + 1
-
-    def get_cascade_index(self) -> int:
-        return self.cascade_index
-
-
     def __repr__(self) -> str:
         return f'Event[title: {self.title}, notes: {self.notes}, style: {self.style}, ' \
                f'day_of_week: {self.__day_of_week}, start_date: {self.__start_date}, end_date: {self.__end_date}, ' \
-               f'start_time: {self.start_time}, end_time: {self.end_time}]'
+               f'start_time: {self.start_time}, end_time: {self.end_time},' \
+               f'cascade_group: {self.cascade_group}, cascade_total: {self.cascade_total}, ' \
+               f'cascade_index: {self.cascade_index}]'
 
     def __eq__(self, other) -> bool:
         return isinstance(other, Event) \
@@ -200,4 +186,7 @@ class Event(object):
                and self.__start_date == other.__start_date \
                and self.__end_date == other.__end_date \
                and self.start_time == other.start_time \
-               and self.end_time == other.end_time
+               and self.end_time == other.end_time \
+               and self.cascade_group == other.cascade_group \
+               and self.cascade_total == other.cascade_total \
+               and self.cascade_index == other.cascade_index

@@ -1,5 +1,6 @@
 import logging
 import textwrap
+from collections import defaultdict
 from datetime import date, time, datetime, timedelta
 from typing import List, Tuple, Optional, NoReturn
 
@@ -91,6 +92,47 @@ class CalendarEvents(object):
             text_size = style.event_title_font.getsize_multiline(event.title)
             if width < text_size[0] or height < text_size[1]:
                 self.config.legend = True
+
+    def group_cascade_events(self) -> NoReturn:
+        group_counter: int = 1
+        groups: dict[int, list[Event]] = defaultdict(list)
+        for i in self.events:
+            for j in self.events:
+                if j == i:
+                    pass
+                else:
+                    if i.start_time < j.start_time < i.end_time \
+                            and i.get_start_date(self.config) == j.get_start_date(self.config):
+                        if i.cascade_group == 0 and j.cascade_group == 0:
+                            i.cascade_group = group_counter
+                            j.cascade_group = group_counter
+                            group_counter += 1
+                        elif i.cascade_group == 0 and j.cascade_group != 0 or i.cascade_group != 0 \
+                                and j.cascade_group == 0:
+                            group_index: int = max(i.cascade_group, j.cascade_group)
+                            i.cascade_group, j.cascade_group = group_index, group_index
+                        elif i.cascade_group != j.cascade_group:
+                            for k in self.events:
+                                if k.cascade_group == i.cascade_group:
+                                    k.cascade_group = j.cascade_group
+
+        for i in self.events:
+            if i.cascade_group > 0:
+                group: list[Event] = groups[i.cascade_group]
+                group.append(i)
+        for i in groups.values():
+            total_group_cascade: int = len(i)
+            event_index: int = 1
+            for j in i:
+                j.cascade_index = event_index
+                event_index += 1
+                j.cascade_total = total_group_cascade
+
+        for i in groups.values():
+            for j in i:
+                for k in i:
+                    if j.cascade_index > k.cascade_index and j.start_time < k.start_time:
+                        j.cascade_index, k.cascade_index = k.cascade_index, j.cascade_index
 
     def _draw_event(self, event: Event) -> NoReturn:
         """
@@ -218,8 +260,10 @@ class CalendarEvents(object):
             start_hour -= config_start_hour
             end_hour -= config_start_hour
 
-        y_start = style.padding_vertical + style.hour_height + start_hour * style.hour_height + (start.minute / 60) * style.hour_height
-        y_end = style.padding_vertical + style.hour_height + end_hour * style.hour_height + (end.minute / 60) * style.hour_height
+        y_start = style.padding_vertical + style.hour_height + start_hour * style.hour_height + (
+                    start.minute / 60) * style.hour_height
+        y_end = style.padding_vertical + style.hour_height + end_hour * style.hour_height + (
+                    end.minute / 60) * style.hour_height
         return y_start, y_end
 
     @staticmethod
