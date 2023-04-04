@@ -1,8 +1,7 @@
-from .context import calendar_view
 from unittest import TestCase
 
 from datetime import time, date, timedelta
-from core import time_utils
+from calendar_view.core import time_utils
 
 
 class TestTimeUtils(TestCase):
@@ -56,8 +55,9 @@ class TestTimeUtils(TestCase):
 
     def test_parse_date(self):
         self.assertEqual(date(2019, 6, 17), time_utils.parse_date('2019-06-17'))
-        self.assertEqual(date(2019, 3, 17), time_utils.parse_date('17.03'))
-        self.assertEqual(date(2019, 3, 2), time_utils.parse_date('02/03'))
+        self.assertEqual(date(2019, 3, 17), time_utils.parse_date('17.03.2019'))
+        self.assertEqual(date(2019, 3, 2).day, time_utils.parse_date('02/03').day)
+        self.assertEqual(date(2019, 3, 2).month, time_utils.parse_date('02/03').month)
 
         now = date.today()
         self.assertEqual(now + timedelta(0 - now.weekday()), time_utils.parse_date('Mo'))

@@ -144,6 +144,9 @@ class Event(object):
         return self.__get_date_by_day_of_week(config)
 
     def __get_date_by_day_of_week(self, config: CalendarConfig) -> date:
+        """
+        Returns the date of the event in the configured interval.
+        """
         if not config:
             raise ValueError("'config' must be defined")
 
@@ -154,7 +157,7 @@ class Event(object):
                              f"Your range is [{start_date}, {end_date}]")
 
         result_date = week_day_for_date(start_date, self.__day_of_week)
-        if start_date <= result_date or end_date <= result_date + timedelta(weeks=1):
+        if start_date <= result_date <= end_date:
             return result_date
         return result_date + timedelta(weeks=1)
 
