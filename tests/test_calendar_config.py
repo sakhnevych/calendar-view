@@ -1,7 +1,6 @@
-from .context import calendar_view
 from unittest import TestCase
 
-from core.data import CalendarConfig
+from calendar_view.core.data import CalendarConfig
 
 
 class TestCalendarConfig(TestCase):

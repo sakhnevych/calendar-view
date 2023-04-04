@@ -85,6 +85,7 @@ def current_week_day(weekday) -> date:
 def parse_date(value: str) -> Optional[date]:
     """
     Allowed formats:
+    'YYYY-mm-dd'
     'YYYY.mm.dd'
     'dd.mm.YYYY'
     'dd.mm.YY'
