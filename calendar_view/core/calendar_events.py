@@ -101,7 +101,7 @@ class CalendarEvents(object):
                 if j == i:
                     pass
                 else:
-                    if i.start_time < j.start_time < i.end_time \
+                    if i.start_time <= j.start_time < i.end_time \
                             and i.get_start_date(self.config) == j.get_start_date(self.config):
                         if i.cascade_group == 0 and j.cascade_group == 0:
                             i.cascade_group = group_counter
