@@ -1,8 +1,18 @@
-Version 1.0.0, 2019-10-14
-- Initial release.
+Version 2.3.0, 2023-06-08
+- Fix a bug where notes were not displayed when split by day (#17);
+- Rename the git repository.
 
-Version 1.2.0, 2021-05-25
-- Fix font error.
+
+Version 2.2.0, 2023-04-04
+- Fix the date comparison (#12);
+- Fix cascade events when they start at the same time (#13);
+- Add Github actions to deploy a package;
+- Update the dependency version.
+
+
+Version 2.1.0, 2022-07-11
+- Add cascade view of events.
+
 
 Version 2.0.0, 2022-06-24
 - Add a font as a resource. The generated image is the same in all operating systems now.
@@ -10,5 +20,10 @@ Version 2.0.0, 2022-06-24
 - Add notes to the calendar event.
 - Fit the title and notes to the event's width.
 
-Version 2.1.0, 2022-07-11
-- Add cascade view of events.
+
+Version 1.2.0, 2021-05-25
+- Fix font error.
+
+
+Version 1.0.0, 2019-10-14
+- Initial release.

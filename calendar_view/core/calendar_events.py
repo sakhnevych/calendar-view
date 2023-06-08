@@ -77,7 +77,7 @@ class CalendarEvents(object):
                 else:
                     fr: datetime = datetime.combine(single_date, time(0, 0))
                     to: datetime = datetime.combine(next_date, time(0, 0))
-                self.__do_add_event(Event(title=event.title, style=event.style, start=fr, end=to))
+                self.__do_add_event(Event(title=event.title, style=event.style, start=fr, end=to, notes=event.notes))
 
     def __do_add_event(self, event: Event) -> None:
         data.validate_event(event, self.config)

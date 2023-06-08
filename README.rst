@@ -7,7 +7,7 @@
    :alt: Supported Python versions
 
 .. image:: https://img.shields.io/pypi/dm/calendar-view
-   :target: https://pypi.org/project/calendar-view/
+   :target: https://pypistats.org/packages/calendar-view
    :alt: PyPi Package Monthly Download
 
 .. image:: https://img.shields.io/pypi/l/calendar-view.svg
@@ -22,6 +22,24 @@ Calendar View
 Library provides a graphical view of the calendar. View, title and events can be easily configured.
 
 The output in ``*.png`` file.
+
+
+Installation
+============
+
+Install the package using PyPI:
+
+.. code-block:: bash
+
+    pip install calendar-view
+
+
+or directly from the repository:
+
+.. code-block:: bash
+
+    pip install git+https://github.com/sakhnevych/calendar-view.git
+
 
 
 Input parameters
@@ -122,7 +140,7 @@ Styles
 ------
 
 You can change styles by setting the required parameter. See the full list of parameters in the file:
-`style.py <https://github.com/sakhnevych/CalendarView/blob/master/calendar_view/config/style.py>`_
+`style.py <https://github.com/sakhnevych/calendar-view/blob/master/calendar_view/config/style.py>`_
 
 
 Example:
@@ -159,8 +177,8 @@ Code:
 
 Output:
 
-.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/simple_view.png
-    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/simple_view.png
+.. image:: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/simple_view.png
+    :target: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/simple_view.png
     :width: 600 px
     :align: center
 
@@ -201,8 +219,8 @@ Code:
 
 Output:
 
-.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/sprint_23.png
-    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/sprint_23.png
+.. image:: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/sprint_23.png
+    :target: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/sprint_23.png
     :width: 600 px
     :align: center
 
@@ -251,8 +269,8 @@ Code:
 
 Output:
 
-.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/yoga_class.png
-    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/yoga_class.png
+.. image:: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/yoga_class.png
+    :target: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/yoga_class.png
     :width: 600 px
     :align: center
 
@@ -308,12 +326,12 @@ Code:
 
 Output:
 
-.. image:: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/massage.png
-    :target: https://raw.githubusercontent.com/sakhnevych/CalendarView/master/docs/massage.png
+.. image:: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/massage.png
+    :target: https://raw.githubusercontent.com/sakhnevych/calendar-view/master/docs/massage.png
     :width: 600 px
     :align: center
 
 License
 =======
 
-CalendarView is licensed under a MIT license. Please see the `LICENSE <LICENSE.rst>`_ file for details.
+calendar-view is licensed under a MIT license. Please see the `LICENSE <LICENSE.rst>`_ file for details.
