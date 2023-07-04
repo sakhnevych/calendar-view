@@ -19,9 +19,9 @@ class MultilineTextMetadata(object):
     """
     The required information to draw the text (title or notes) for the event.
     """
-    def __init__(self, text: Optional[str] = None, size: tuple[int, int] = (0, 0)):
+    def __init__(self, text: Optional[str] = None, size: Tuple[int, int] = (0, 0)):
         self.text: Optional[str] = text
-        self.size: tuple[int, int] = size
+        self.size: Tuple[int, int] = size
         self.visible: bool = text is not None and size[0] > 0 and size[1] > 0
         # self.trimmed: bool = False
 
@@ -153,13 +153,13 @@ class CalendarEvents(object):
         if self.config.legend:
             return  # The title and notes are printed in the legend. Skip drawing here.
 
-        cell_inner_size: tuple[int, int] = EventDrawHelper.count_cell_inner_size(x, y)
+        cell_inner_size: Tuple[int, int] = EventDrawHelper.count_cell_inner_size(x, y)
         if cell_inner_size[0] == 0 or cell_inner_size[1] == 0:
             return  # not possible to draw nothing inside the event cell
 
         # calculate text block sizes
         title_metadata: MultilineTextMetadata = EventDrawHelper.build_title_metadata(event.title, cell_inner_size)
-        notes_inner_size: tuple[int, int] = (
+        notes_inner_size: Tuple[int, int] = (
             cell_inner_size[0],
             cell_inner_size[1] - (title_metadata.size[1] + style.event_title_margin if title_metadata.visible else 0)
         )
@@ -175,7 +175,7 @@ class CalendarEvents(object):
                                                                                   text_height=title_metadata.size[1],
                                                                                   total_text_height=total_height)
             # the top-left position of the title block
-            title_pos: tuple[int, int] = (
+            title_pos: Tuple[int, int] = (
                 (p1[0] + p2[0]) / 2 - title_metadata.size[0] / 2,
                 y_top_offset + y_text_offset
             )
@@ -194,7 +194,7 @@ class CalendarEvents(object):
                                                                                  text_height=notes_metadata.size[1],
                                                                                  total_text_height=total_height)
             # the top-left position of the notes block
-            notes_pos: tuple[int, int] = (
+            notes_pos: Tuple[int, int] = (
                 p1[0] + style.event_padding,
                 y_top_offset + y_text_offset
             )
@@ -274,7 +274,7 @@ class CalendarEvents(object):
 
 class EventDrawHelper:
     @staticmethod
-    def count_cell_inner_size(x: tuple[float, float], y: tuple[float, float]) -> tuple[int, int]:
+    def count_cell_inner_size(x: Tuple[float, float], y: Tuple[float, float]) -> Tuple[int, int]:
         return (
             max(0, int(x[1] - x[0] - 2 * style.line_day_width) - 2 * style.event_padding),
             max(0, int(y[1] - y[0] - 2 * style.line_day_width) - 2 * style.event_padding)
@@ -293,14 +293,14 @@ class EventDrawHelper:
         return height
 
     @staticmethod
-    def build_title_metadata(title: Optional[str], cell_inner_size: tuple[int, int]) -> MultilineTextMetadata:
+    def build_title_metadata(title: Optional[str], cell_inner_size: Tuple[int, int]) -> MultilineTextMetadata:
         """
         Try to fit the title in the event inner cell. Split the text into the multiple lines if required.
         """
         return EventDrawHelper.__build_text_metadata(title, cell_inner_size, style.event_title_font, True)
 
     @staticmethod
-    def build_notes_metadata(notes: Optional[str], notes_inner_size: tuple[int, int]) -> MultilineTextMetadata:
+    def build_notes_metadata(notes: Optional[str], notes_inner_size: Tuple[int, int]) -> MultilineTextMetadata:
         """
         Try to fit notes in the event inner cell. Split the text into the multiple lines if required.
         """
@@ -325,7 +325,7 @@ class EventDrawHelper:
         raise RuntimeError(f'Wrong vertical align value: {vertical_align}')
 
     @staticmethod
-    def __build_text_metadata(text: Optional[str], box_size: tuple[int, int], font: FreeTypeFont, strip_lines: bool) \
+    def __build_text_metadata(text: Optional[str], box_size: Tuple[int, int], font: FreeTypeFont, strip_lines: bool) \
             -> MultilineTextMetadata:
         """
         Try to fit text in the given box. Split the text into the multiple lines if required.
@@ -336,7 +336,7 @@ class EventDrawHelper:
             return MultilineTextMetadata()
 
         text = text.strip()
-        text_size: tuple[int, int] = font.getsize_multiline(text)
+        text_size: Tuple[int, int] = font.getsize_multiline(text)
         if EventDrawHelper.__fits_the_borders(text_size, box_size):
             return MultilineTextMetadata(text, text_size)
         elif EventDrawHelper.__fits_the_width(text_size, box_size):
@@ -346,7 +346,7 @@ class EventDrawHelper:
         base_new_text_width: int = int(box_size[0] * max_width / text_size[0])
 
         new_text: str = ''
-        new_text_size: tuple[int, int] = (0, 0)
+        new_text_size: Tuple[int, int] = (0, 0)
         for retry_count in range(0, 12, 2):
             new_test_width: int = base_new_text_width - retry_count
             if new_test_width <= 0:
@@ -364,9 +364,9 @@ class EventDrawHelper:
         # textwrap.shorten(title, width=20, placeholder=' ...')
 
     @staticmethod
-    def __fits_the_borders(size: tuple[int, int], border: tuple[int, int]) -> bool:
+    def __fits_the_borders(size: Tuple[int, int], border: Tuple[int, int]) -> bool:
         return size[0] <= border[0] and size[1] <= border[1]
 
     @staticmethod
-    def __fits_the_width(size: tuple[int, int], border: tuple[int, int]) -> bool:
+    def __fits_the_width(size: Tuple[int, int], border: Tuple[int, int]) -> bool:
         return size[0] <= border[0]
