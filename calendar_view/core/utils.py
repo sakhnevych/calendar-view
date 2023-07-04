@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, List
 
 
 class StringUtils:
@@ -11,7 +11,7 @@ class StringUtils:
         return bool(value and value.strip())
 
     @staticmethod
-    def strip_lines(input_lines: list[str], strip_lines: bool) -> list[str]:
+    def strip_lines(input_lines: List[str], strip_lines: bool) -> List[str]:
         result: list[str] = []
         for line in input_lines:
             for row in line.split('\n'):
@@ -21,7 +21,7 @@ class StringUtils:
         return result
 
     @staticmethod
-    def count_max_text_width(text: Union[str, list[str]], left_strip_lines: bool = False) -> int:
+    def count_max_text_width(text: Union[str, List[str]], left_strip_lines: bool = False) -> int:
         if isinstance(text, str):
             return max([len(StringUtils.strip(line, left_strip_lines, True)) for line in text.split('\n')])
         if isinstance(text, list):
