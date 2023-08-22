@@ -1,5 +1,4 @@
-from collections import defaultdict
-from typing import List, NoReturn
+from typing import List
 
 from PIL import Image, ImageDraw
 
@@ -48,7 +47,7 @@ class Calendar:
         if kwargs:
             self.events.add_event(Event(**kwargs))
 
-    def save(self, filename: str) -> NoReturn:
+    def save(self, filename: str) -> None:
         self.events.group_cascade_events()
         self._build_image()
         self.full_image.save(filename, "PNG")
