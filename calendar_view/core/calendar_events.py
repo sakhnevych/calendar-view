@@ -2,7 +2,7 @@ import logging
 import textwrap
 from collections import defaultdict
 from datetime import date, time, datetime, timedelta
-from typing import List, Tuple, Optional, NoReturn
+from typing import List, Tuple, Optional
 
 from PIL import Image, ImageDraw
 from PIL.ImageFont import FreeTypeFont
@@ -93,7 +93,7 @@ class CalendarEvents(object):
             if width < text_size[0] or height < text_size[1]:
                 self.config.legend = True
 
-    def group_cascade_events(self) -> NoReturn:
+    def group_cascade_events(self) -> None:
         group_counter: int = 1
         groups: dict[int, list[Event]] = defaultdict(list)
         for i in self.events:
@@ -134,7 +134,7 @@ class CalendarEvents(object):
                     if j.cascade_index > k.cascade_index and j.start_time < k.start_time:
                         j.cascade_index, k.cascade_index = k.cascade_index, j.cascade_index
 
-    def _draw_event(self, event: Event) -> NoReturn:
+    def _draw_event(self, event: Event) -> None:
         """
         The events have already been split to the separate days. The event is for 1 day only.
         """
