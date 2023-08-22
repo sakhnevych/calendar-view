@@ -1,4 +1,4 @@
-from typing import Union, NoReturn
+from typing import Union
 
 from calendar_view.config import style
 from calendar_view.core.config import CalendarConfig
