@@ -12,7 +12,7 @@ from calendar_view.core import data, time_utils
 from calendar_view.core.config import CalendarConfig, VerticalAlign
 from calendar_view.core.event import Event
 from calendar_view.core.round_rectangle import draw_rounded_rectangle
-from calendar_view.core.utils import StringUtils
+from calendar_view.core.utils import StringUtils, FontUtils
 
 
 class MultilineTextMetadata(object):
@@ -89,7 +89,7 @@ class CalendarEvents(object):
             y = self.__get_event_y(event.start_time, event.end_time)
             height = y[1] - y[0]
             width = style.day_width
-            text_size = style.event_title_font.getsize_multiline(event.title)
+            text_size: Tuple[int, int] = FontUtils.get_multiline_text_size(style.event_title_font, event.title)
             if width < text_size[0] or height < text_size[1]:
                 self.config.legend = True
 
@@ -218,7 +218,7 @@ class CalendarEvents(object):
         height = 0
         for e in self.events:
             text = self._get_event_legend_text(e)
-            text_width, text_height = style.legend_name_font.getsize_multiline(text)
+            text_width, text_height = FontUtils.get_multiline_text_size(style.legend_name_font, text)
             width = max(width, text_width)
             height += text_height
 
@@ -231,7 +231,7 @@ class CalendarEvents(object):
         x = style.legend_padding_left
         y = style.legend_padding_top
         for e in self.events:
-            _, text_height = style.event_title_font.getsize_multiline(e.title)
+            _, text_height = FontUtils.get_multiline_text_size(style.event_title_font, e.title)
             text = self._get_event_legend_text(e)
             legend_draw.multiline_text((x, y), text, font=style.legend_name_font, fill=style.legend_name_color)
             y += text_height + style.legend_spacing
@@ -336,7 +336,7 @@ class EventDrawHelper:
             return MultilineTextMetadata()
 
         text = text.strip()
-        text_size: Tuple[int, int] = font.getsize_multiline(text)
+        text_size: Tuple[int, int] = FontUtils.get_multiline_text_size(font, text)
         if EventDrawHelper.__fits_the_borders(text_size, box_size):
             return MultilineTextMetadata(text, text_size)
         elif EventDrawHelper.__fits_the_width(text_size, box_size):
@@ -355,7 +355,7 @@ class EventDrawHelper:
             lines: list[str] = textwrap.wrap(text, width=new_test_width, replace_whitespace=False)
             lines = StringUtils.strip_lines(lines, strip_lines)
             new_text = '\n'.join(lines)
-            new_text_size = font.getsize_multiline(new_text)
+            new_text_size: Tuple[int, int] = FontUtils.get_multiline_text_size(font, new_text)
             if EventDrawHelper.__fits_the_borders(new_text_size, box_size):
                 return MultilineTextMetadata(new_text, new_text_size)
             elif EventDrawHelper.__fits_the_width(new_text_size, box_size):

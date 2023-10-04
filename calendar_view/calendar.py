@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from PIL import Image, ImageDraw
 
@@ -7,7 +7,7 @@ from calendar_view.core.calendar_events import CalendarEvents
 from calendar_view.core.calendar_grid import CalendarGrid
 from calendar_view.core.config import CalendarConfig
 from calendar_view.core.event import Event
-from calendar_view.core.utils import StringUtils
+from calendar_view.core.utils import StringUtils, FontUtils
 
 
 class Calendar:
@@ -78,7 +78,7 @@ class Calendar:
 
         event_width, event_height = events.size
         legend_width, legend_height = (0, 0) if legend is None else legend.size
-        title_size = style.title_font.getsize_multiline(title)
+        title_size: Tuple[int, int] = FontUtils.get_multiline_text_size(style.title_font, title)
         title_width = title_size[0] + style.title_padding_left + style.title_padding_right
         title_height = title_size[1] + style.title_padding_top + style.title_padding_bottom
         final_width = max(event_width, title_width, legend_width)

@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 
 from calendar_view.config import i18n, style
 from calendar_view.core.config import CalendarConfig
+from calendar_view.core.utils import FontUtils
 
 
 class CalendarGrid(object):
@@ -45,7 +46,7 @@ class CalendarGrid(object):
         # write hour numbers
         for i in range(hour_count + 1):
             text = str(hour_from + i)
-            text_size = style.hour_number_font.getsize(text)
+            text_size: Tuple[int, int] = FontUtils.get_text_size(style.hour_number_font, text)
             x = style.padding_horizontal - text_size[0] - 10
             y = style.padding_vertical + style.hour_height + i * style.hour_height - text_size[1] / 2
 
@@ -55,7 +56,7 @@ class CalendarGrid(object):
         for i in range(day_count):
             day = date_from + timedelta(days=i)
             text = self._get_day_title(day)
-            text_size = style.day_of_week_font.getsize(text)
+            text_size: Tuple[int, int] = FontUtils.get_text_size(style.day_of_week_font, text)
             x = style.padding_horizontal + i * style.day_width + style.day_width / 2 - text_size[0] / 2
             y = style.padding_vertical + text_size[1] / 2
             self._grid_draw.text((x, y), text, font=style.day_of_week_font, fill=style.day_of_week_color)
