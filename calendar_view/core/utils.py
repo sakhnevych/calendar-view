@@ -1,4 +1,6 @@
-from typing import Union, List
+from typing import Union, List, Tuple
+
+from PIL import ImageFont, ImageDraw, Image
 
 
 class StringUtils:
@@ -35,3 +37,24 @@ class StringUtils:
         if right_strip:
             text = text.rstrip()
         return text
+
+
+class FontUtils:
+    @staticmethod
+    def get_text_size(font: ImageFont, text: str) -> Tuple[int, int]:
+        if hasattr(font, 'getsize'):
+            return font.getsize(text)
+
+        # More information: https://pillow.readthedocs.io/en/stable/deprecations.html
+        left, top, right, bottom = font.getbbox(text)
+        return right - left, bottom - top
+
+    @staticmethod
+    def get_multiline_text_size(font: ImageFont, text: str) -> Tuple[int, int]:
+        if hasattr(font, 'getsize_multiline'):
+            return font.getsize_multiline(text)
+
+        dummy_draw: ImageDraw = ImageDraw.Draw(Image.new('RGB', (1, 1)))
+        # More information: https://pillow.readthedocs.io/en/stable/deprecations.html
+        left, top, right, bottom = dummy_draw.multiline_textbbox((0, 0), text, font=font)
+        return right - left, bottom - top

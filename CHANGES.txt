@@ -1,3 +1,7 @@
+Version 2.4.0, 2023-10-05
+- Upgrade the Pillow version due to the vulnerability CVE-2023-4863.
+
+
 Version 2.3.2, 2023-08-22
 - Change return type from NoReturn to None (#21).
 
