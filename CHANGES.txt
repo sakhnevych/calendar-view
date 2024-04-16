@@ -1,3 +1,7 @@
+Version 2.4.2, 2024-04-17
+- Upgrade the Pillow version due to the vulnerability CVE-2024-28219.
+
+
 Version 2.4.1, 2024-01-25
 - Upgrade the Pillow version due to the vulnerability CVE-2023-50447.
 
