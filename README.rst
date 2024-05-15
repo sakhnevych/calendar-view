@@ -1,25 +1,17 @@
-.. image:: https://img.shields.io/pypi/v/calendar-view.svg
-   :target: https://pypi.org/project/calendar-view/
-   :alt: PyPi Package Version
+.. raw:: html
 
-.. image:: https://img.shields.io/pypi/pyversions/calendar-view.svg
-   :target: https://pypi.org/project/calendar-view/
-   :alt: Supported Python versions
+   <a href="https://pypi.org/project/calendar-view/"><img src="https://img.shields.io/pypi/v/calendar-view.svg" alt="PyPi Package Version"></a>
+   <a href="https://pypi.org/project/calendar-view/"><img src="https://img.shields.io/pypi/pyversions/calendar-view.svg" alt="Supported Python versions"></a>
+   <a href="https://pypistats.org/packages/calendar-view"><img src="https://img.shields.io/pypi/dm/calendar-view.svg" alt="PyPi Package Monthly Download"></a>
+   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/pypi/l/calendar-view.svg" alt="MIT License"></a>
 
-.. image:: https://img.shields.io/pypi/dm/calendar-view
-   :target: https://pypistats.org/packages/calendar-view
-   :alt: PyPi Package Monthly Download
-
-.. image:: https://img.shields.io/pypi/l/calendar-view.svg
-   :target: https://opensource.org/licenses/MIT
-   :alt: MIT License
 
 
 =============
 Calendar View
 =============
 
-Library provides a graphical view of the calendar. View, title and events can be easily configured.
+The library provides a graphical view of the calendar. View, title and events can be easily configured.
 
 The output in ``*.png`` file.
 
@@ -48,7 +40,7 @@ Input parameters
 Configuration
 -------------
 
-Configuration for all views can be done using ``CalendarConfig`` class.
+Configuration for all views can be done using the ``CalendarConfig`` class.
 
 .. csv-table::
    :header: "Parameter", "Type", "Description"
