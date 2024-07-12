@@ -15,6 +15,8 @@ from calendar_view.core.round_rectangle import draw_rounded_rectangle
 from calendar_view.core.utils import StringUtils, FontUtils
 
 
+logger = logging.getLogger(__name__)
+
 class MultilineTextMetadata(object):
     """
     The required information to draw the text (title or notes) for the event.
@@ -49,21 +51,21 @@ class CalendarEvents(object):
         Validate events.
         """
         if event.get_duration_seconds(self.config) < 1:
-            logging.warning(f"Skipping event, the duration is too small: {event}")
+            logger.warning(f"Skipping event, the duration is too small: {event}")
             return
         end_date: date = event.get_end_date(self.config)
         start_date: date = event.get_start_date(self.config)
         if end_date < self.config.get_date_range()[0]:
-            logging.warning(f"Skipping event, it ends before the visible range: {event}")
+            logger.warning(f"Skipping event, it ends before the visible range: {event}")
             return
         if start_date > self.config.get_date_range()[1]:
-            logging.warning(f"Skipping event, it starts after the visible range: {event}")
+            logger.warning(f"Skipping event, it starts after the visible range: {event}")
             return
 
         if start_date == end_date or ((end_date - start_date).days == 1 and event.end_time == time(0, 0)):
             self.__do_add_event(event)
         else:
-            logging.debug(f'Splitting the event: {event}')
+            logger.debug(f'Splitting the event: {event}')
             iter_from: date = max(start_date, self.config.get_date_range()[0])
             iter_to: date = min(end_date, self.config.get_date_range()[1])
             for single_date in time_utils.date_range(iter_from, iter_to):
@@ -82,7 +84,7 @@ class CalendarEvents(object):
     def __do_add_event(self, event: Event) -> None:
         data.validate_event(event, self.config)
         self.events.append(event)
-        logging.debug(f'Added internal event: {event}')
+        logger.debug(f'Added internal event: {event}')
 
         # if legend is needed
         if self.config.legend is None and event.title is not None:

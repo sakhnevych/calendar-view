@@ -7,6 +7,7 @@ from calendar_view.core.utils import StringUtils
 
 VerticalAlign = Literal['top', 'center', 'bottom']
 
+logger = logging.getLogger(__name__)
 
 class CalendarConfig(object):
     """
@@ -65,9 +66,9 @@ class CalendarConfig(object):
         self.get_hours_range()
         self.get_date_range()
         if self.dates and self.days:
-            logging.warning("Both parameters 'days' and 'dates' are used. 'days' value will be skipped.")
+            logger.warning("Both parameters 'days' and 'dates' are used. 'days' value will be skipped.")
         if self.show_year and not self.show_date:
-            logging.warning("'show_year' is set to True, but date wont be displayed, because 'show_date' is False.")
+            logger.warning("'show_year' is set to True, but date wont be displayed, because 'show_date' is False.")
 
     def get_date_range(self) -> Tuple[date, date]:
         """
@@ -78,7 +79,7 @@ class CalendarConfig(object):
         if self.days:
             return date.today(), date.today() + timedelta(days=self.days - 1)
 
-        logging.warning("Date range is not defined. Using default range 'Mo - Su'.")
+        logger.warning("Date range is not defined. Using default range 'Mo - Su'.")
         return time_utils.current_week_day(0), time_utils.current_week_day(6)
 
     def get_hours_range(self) -> Tuple[int, int]:
