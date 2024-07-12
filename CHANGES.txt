@@ -1,3 +1,8 @@
+Version 2.4.3, 2024-07-12
+- Add logger objects for module-specific logging (#29).
+- Upgrade the Pillow version to 10.4.0
+
+
 Version 2.4.2, 2024-04-17
 - Upgrade the Pillow version due to the vulnerability CVE-2024-28219.
 
