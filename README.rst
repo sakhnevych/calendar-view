@@ -1,10 +1,14 @@
-.. raw:: html
+.. image:: https://img.shields.io/pypi/v/calendar-view.svg
+   :target: https://pypi.org/project/calendar-view/
+   :alt: PyPi Package Version
 
-   <a href="https://pypi.org/project/calendar-view/"><img src="https://img.shields.io/pypi/v/calendar-view.svg" alt="PyPi Package Version"></a>
-   <a href="https://pypi.org/project/calendar-view/"><img src="https://img.shields.io/pypi/pyversions/calendar-view.svg" alt="Supported Python versions"></a>
-   <a href="https://pypistats.org/packages/calendar-view"><img src="https://img.shields.io/pypi/dm/calendar-view.svg" alt="PyPi Package Monthly Download"></a>
-   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/pypi/l/calendar-view.svg" alt="MIT License"></a>
+.. image:: https://img.shields.io/pypi/dm/calendar-view.svg
+   :target: https://pypistats.org/packages/calendar-view
+   :alt: PyPi Package Monthly Download
 
+.. image:: https://img.shields.io/pypi/l/calendar-view.svg
+   :target: https://opensource.org/licenses/MIT
+   :alt: MIT License
 
 
 =============
@@ -326,4 +330,4 @@ Output:
 License
 =======
 
-calendar-view is licensed under a MIT license. Please see the `LICENSE <LICENSE.rst>`_ file for details.
+calendar-view is licensed under a MIT license. Please see the `file <LICENSE>`_ for details.

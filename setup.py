@@ -1,7 +1,5 @@
 import setuptools
 
-with open("README.rst", "r") as f:
-    long_description = f.read()
 
 setuptools.setup(
     name="calendar-view",
@@ -9,7 +7,7 @@ setuptools.setup(
     author="Oleksandr Sakhnevych, Daniil Limariev",
     author_email="o.sakhnevych@gmail.com, danillim02102003@gmail.com",
     description="Library provides a graphical view of the calendar.",
-    long_description=long_description,
+    long_description=open("README.rst").read(),
     long_description_content_type="text/x-rst",
     url="https://github.com/sakhnevych/calendar-view",
     packages=setuptools.find_packages(),
