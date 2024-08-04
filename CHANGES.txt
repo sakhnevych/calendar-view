@@ -1,3 +1,7 @@
+Version 2.4.4, 2024-08-04
+- Fix the unavoidable warning about days and dates are used at the same time (#30).
+
+
 Version 2.4.3, 2024-07-12
 - Add logger objects for module-specific logging (#29).
 - Upgrade the Pillow version to 10.4.0
