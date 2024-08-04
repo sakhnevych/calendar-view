@@ -18,11 +18,13 @@ class CalendarConfig(object):
     'day_hours' - show hours range '8:00 - 22:00'
     'working_hours' - show hours range '8:00 - 19:00'
     """
+    DEFAULT_DAYS: int = 7
+
     def __init__(self,
                  lang: str = 'en',
                  title: str = '',
                  dates: str = None,
-                 days: int = 7,
+                 days: int = None,
                  hours: str = None,
                  mode: str = None,
                  show_date: bool = True,
@@ -32,7 +34,8 @@ class CalendarConfig(object):
         self.lang = lang
         self.title = title
         self.dates = dates
-        self.days = days
+        self.days = days if days else CalendarConfig.DEFAULT_DAYS
+        self._default_days: bool = True if days is None else False
         self.hours = hours
         self.mode = mode
         self.show_date = show_date
@@ -65,7 +68,7 @@ class CalendarConfig(object):
             raise Exception("Parameter 'days' can be in interval [1, 14]")
         self.get_hours_range()
         self.get_date_range()
-        if self.dates and self.days:
+        if self.dates and self.days and not self._default_days:
             logger.warning("Both parameters 'days' and 'dates' are used. 'days' value will be skipped.")
         if self.show_year and not self.show_date:
             logger.warning("'show_year' is set to True, but date wont be displayed, because 'show_date' is False.")
