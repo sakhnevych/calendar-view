@@ -50,7 +50,7 @@ Configuration for all views can be done using the ``CalendarConfig`` class.
    :header: "Parameter", "Type", "Description"
    :widths: 17, 10, 73
 
-   ``lang``, str, "Language, which is used for the name of the weekday. Supported values: en, ru, ua. Default value: **en**"
+   ``lang``, str, "Language, which is used for the name of the weekday. Supported values: en, ru, ua, es. Default value: **en**"
    ``title``, str, "Title of the view. Can be empty"
    ``dates``, str, "The range of the days to show. Default value: **'Mo - Su'**"
    ``days``, int, "If ``dates`` does not exist, the number of days to display can be configured starting from Monday. For example, '4' means ``dates='Mo - Th'``"
@@ -91,7 +91,7 @@ Event
    :header: "Parameter", "Type", "Description"
    :widths: 20, 10, 70
 
-   ``name``, str, "Language, which is used for the name of the weekday. Supported values: en, ru, ua"
+   ``name``, str, "Language, which is used for the name of the weekday. Supported values: en, ru, ua, es"
    ``day``, str / date / datetime, "The day of the event. Can be set using any of 3 different types. Can't be defined together with ``day_of_week``"
    ``day_of_week``, int, "The range of the days to show. Can't be defined together with ``day``"
    ``start``, str / time / datetime, "Start of the event. Can be set using any of 3 different types. The string has format **HH:mm** or **HH**."
