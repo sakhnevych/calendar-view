@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name="calendar-view",
-    version="2.4.4",
+    version="2.4.5",
     author="Oleksandr Sakhnevych, Daniil Limariev",
     author_email="o.sakhnevych@gmail.com, danillim02102003@gmail.com",
     description="Library provides a graphical view of the calendar.",
