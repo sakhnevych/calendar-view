@@ -36,14 +36,15 @@ day_of_week_i18n = {
         'Do'
     ],
     'pt': [
-        'Se',
-        'Te',
-        'Qu',
-        'Qu',
-        'Se',
-        'Sa',
-        'Do'
+        'Seg',
+        'Ter',
+        'Qua',
+        'Qui',
+        'Sex',
+        'Sab',
+        'Dom'
     ],
+
 }
 
 

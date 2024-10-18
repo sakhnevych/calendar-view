@@ -91,7 +91,8 @@ Event
    :header: "Parameter", "Type", "Description"
    :widths: 20, 10, 70
 
-   ``name``, str, "Language, which is used for the name of the weekday. Supported values: en, ru, ua, es, pt"
+   ``title``, str, "The title of the event."
+   ``notes``, str, "The notes that will be printed below the title"
    ``day``, str / date / datetime, "The day of the event. Can be set using any of 3 different types. Can't be defined together with ``day_of_week``"
    ``day_of_week``, int, "The range of the days to show. Can't be defined together with ``day``"
    ``start``, str / time / datetime, "Start of the event. Can be set using any of 3 different types. The string has format **HH:mm** or **HH**."

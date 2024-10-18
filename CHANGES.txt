@@ -1,3 +1,7 @@
+Version 2.4.6, 2024-10-18
+- Add Portuguese language support (#33).
+
+
 Version 2.4.5, 2024-09-23
 - Add Spanish language support (#32).
 

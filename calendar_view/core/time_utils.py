@@ -7,6 +7,7 @@ from calendar_view.core.utils import StringUtils
 MAX_DAYS_RANGE_ALLOWED = 15
 ZERO_TIME = time(0, 0)
 weekday_dict = {
+    # en
     'mo': 0,
     'tu': 1,
     'we': 2,
@@ -14,28 +15,31 @@ weekday_dict = {
     'fr': 4,
     'sa': 5,
     'su': 6,
+    # ua / ru
     'пн': 0,
     'вт': 1,
     'ср': 2,
     'чт': 3,
     'пт': 4,
     'сб': 5,
-    'вс': 6,
     'нд': 6,
+    'вс': 6,
+    # es
     'lu': 0,
     'ma': 1,
     'mi': 2,
     'ju': 3,
     'vi': 4,
-    'sa': 5,
+    #'sa': 5,
     'do': 6,
-    'se': 0,
-    'te': 1,
-    'qu': 2,
-    'qu': 3,
-    'se': 4,
-    'sa': 5,
-    'do': 6,
+    # pt
+    'seg': 0,
+    'ter': 1,
+    'qua': 2,
+    'qui': 3,
+    'sex': 4,
+    'sab': 5,
+    'dom': 6,
 }
 time_regex = re.compile(r'^([0-9]{1,2})(:([0-9]{2}))?$')
 
