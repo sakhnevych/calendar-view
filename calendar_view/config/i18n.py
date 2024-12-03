@@ -44,6 +44,15 @@ day_of_week_i18n = {
         'Sab',
         'Dom'
     ],
+    'de': [
+        'Mo',
+        'Di',
+        'Mi',
+        'Do',
+        'Fr',
+        'Sa',
+        'So'
+    ],
 
 }
 
