@@ -40,6 +40,14 @@ weekday_dict = {
     'sex': 4,
     'sab': 5,
     'dom': 6,
+    # de
+    'mon': 0,
+    'die': 1,
+    'mit': 2,
+    'don': 3,
+    'fre': 4,
+    'sam': 5,
+    'son': 6,
 }
 time_regex = re.compile(r'^([0-9]{1,2})(:([0-9]{2}))?$')
 
