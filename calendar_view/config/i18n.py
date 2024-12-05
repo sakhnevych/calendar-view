@@ -27,13 +27,13 @@ day_of_week_i18n = {
         'Do'
     ],
     'de': [
-        'Mon',
-        'Die',
-        'Mit',
-        'Don',
-        'Fre',
-        'Sam',
-        'Son'
+        'Mo',
+        'Di',
+        'Mi',
+        'Do',
+        'Fr',
+        'Sa',
+        'So'
     ],
     'ru': [
         'Пн',

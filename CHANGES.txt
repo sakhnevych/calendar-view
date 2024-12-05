@@ -1,3 +1,7 @@
+Version 2.4.8, 2024-12-06
+- Fix German language support.
+
+
 Version 2.4.7, 2024-12-03
 - Add German language support (#34).
 
