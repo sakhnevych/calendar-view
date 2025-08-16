@@ -1,3 +1,7 @@
+Version 2.4.9, 2025-08-16
+- Add French language support (#36).
+
+
 Version 2.4.8, 2024-12-06
 - Fix German language support.
 
