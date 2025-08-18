@@ -1,3 +1,9 @@
+Version 2.5.0, 2025-08-18
+- Fix the parsing of weekdays in the configuration (#38).
+- Add Dutch language support (#37).
+- Update the Pillow dependency version.
+
+
 Version 2.4.9, 2025-08-16
 - Add French language support (#36).
 

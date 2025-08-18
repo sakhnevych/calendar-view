@@ -72,7 +72,6 @@ class Event(object):
         # run additional validation
         self.__validate()
 
-
     @staticmethod
     def __parse_start_date(day_of_week: Optional[int],
                            day: Union[date, datetime, str],
@@ -105,7 +104,7 @@ class Event(object):
             if isinstance(day, datetime):
                 return day.date()
             if isinstance(day, str):
-                return parse_date(day)
+                return parse_date(day, None)
         if time_entry and isinstance(time_entry, datetime):
             return time_entry.date()
         return None

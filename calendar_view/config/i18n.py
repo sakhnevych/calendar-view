@@ -1,3 +1,5 @@
+default_lang: str = 'en'
+
 day_of_week_i18n = {
     'en': [
         'Mo',
@@ -74,18 +76,22 @@ day_of_week_i18n = {
 }
 
 
-def days_of_week(lang: str = 'en'):
+def supported_languages() -> list[str]:
+    return list(day_of_week_i18n.keys())
+
+
+def days_of_week(lang: str = default_lang):
     """
-    Returns the localization for the names of all days of the week
+    Returns the localisation for the names of all days of the week.
     """
     if lang not in day_of_week_i18n.keys():
         raise ValueError('Not defined for language ' + lang)
     return day_of_week_i18n[lang]
 
 
-def day_of_week(day_of_week: int, lang: str = 'en'):
+def day_of_week(day_of_week: int, lang: str = default_lang):
     """
-    Returns the localization for the name of particular day of the week
+    Returns the localisation for the name of particular day of week.
     :param day_of_week: 0 - Monday, 1 - Tuesday, ..., 6 - Sunday
     """
     if lang not in day_of_week_i18n.keys():

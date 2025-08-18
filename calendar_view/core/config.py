@@ -9,6 +9,7 @@ VerticalAlign = Literal['top', 'center', 'bottom']
 
 logger = logging.getLogger(__name__)
 
+
 class CalendarConfig(object):
     """
     Mode will override some parameters.
@@ -75,10 +76,10 @@ class CalendarConfig(object):
 
     def get_date_range(self) -> Tuple[date, date]:
         """
-        Returns tuple of start and end day for visualisation. For example: 'date(2019, 05, 17), date(2019, 05, 20)'
+        Returns tuple of start and end day for visualisation. For example, 'date(2019, 05, 17), date(2019, 05, 20)'
         """
         if StringUtils.is_not_blank(self.dates):
-            return time_utils.parse_date_interval(self.dates)
+            return time_utils.parse_date_interval(self.dates, lang=self.lang)
         if self.days:
             return date.today(), date.today() + timedelta(days=self.days - 1)
 
@@ -87,7 +88,7 @@ class CalendarConfig(object):
 
     def get_hours_range(self) -> Tuple[int, int]:
         """
-        Returns tuple of start and end hour for visualisation. For example: '10, 18'
+        Returns tuple of start and end hour for visualisation. For example, '10, 18'
         """
         if StringUtils.is_blank(self.hours):
             return 0, 24

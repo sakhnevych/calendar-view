@@ -1,12 +1,18 @@
 from PIL import ImageFont
-from pkg_resources import resource_filename
+try:
+    from importlib.resources import files, as_file  # stdlib (Py≥3.9)
+except ImportError:
+    # noinspection PyUnresolvedReferences
+    from importlib_resources import files, as_file  # backport
+
 
 font_path: str = 'Roboto-Regular.ttf'
 
 
 def image_font(size: int):
-    path: str = resource_filename('calendar_view.resources.fonts', font_path)
-    return ImageFont.truetype(path, size)
+    res = files('calendar_view.resources.fonts') / font_path
+    with as_file(res) as tmp_path:
+        return ImageFont.truetype(str(tmp_path), size)
 
 
 image_bg = (255, 255, 255, 255)
