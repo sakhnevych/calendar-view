@@ -62,6 +62,15 @@ day_of_week_i18n = {
         'Sam',
         'Dim'
     ],
+    'nl': [
+        'Ma',
+        'Di',
+        'Wo',
+        'Do',
+        'Vr',
+        'Za',
+        'Zo'
+    ],
 }
 
 
