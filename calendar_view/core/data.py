@@ -7,6 +7,7 @@ from calendar_view.core.event import Event
 
 logger = logging.getLogger(__name__)
 
+
 class InputData(object):
     def __init__(self, config: CalendarConfig, events: list):
         self.config = config
