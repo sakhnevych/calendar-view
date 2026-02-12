@@ -1,3 +1,7 @@
+Version 2.5.1, 2026-02-12
+- Update the Pillow dependency version to fix the vulnerability CVE-2026-25990 (however, it doesn't impact the library).
+
+
 Version 2.5.0, 2025-08-18
 - Fix the parsing of weekdays in the configuration (#38).
 - Add Dutch language support (#37).
