@@ -1,3 +1,7 @@
+Version 2.5.3, 2026-07-21
+- Update the Pillow dependency version to address the CVE-2026-59203 vulnerability (though this does not affect the library).
+
+
 Version 2.5.2, 2026-04-16
 - Update the Pillow dependency version to fix the vulnerability CVE-2026-40192 (however, it doesn't impact the library).
 
